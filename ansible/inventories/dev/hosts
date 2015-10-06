@@ -1,2 +1,9 @@
-[insacloud-back]
-localhost
+#!/bin/bash
+# -*- mode: bash; -*-
+# this syntax make the playbook runnable via windows+vagrant
+
+cat<<EOF
+{
+  "insacloud-back": [ "localhost" ]
+}
+EOF

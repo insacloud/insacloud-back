@@ -2,4 +2,4 @@
 
 - hosts: insacloud-back
   roles:
-    - role-python
+    - role-postgre

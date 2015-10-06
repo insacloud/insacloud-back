@@ -1,0 +1,45 @@
+---
+- name: Install postgres
+  apt: name=postgresql-9.4 state=present
+  register: __postgres9_installed
+
+# - name: Initializes database
+#   command: service postgresql initdb
+#   when: __postgres9_installed.changed
+
+- name: Ensure postgres is started
+  service: name=postgresql state=started
+
+- name: Installs useful packages
+  apt: name={{item}} state=present
+  with_items:
+    - python-psycopg2
+    - sudo
+
+# TODO : variabilize
+- name: Create Database insacloud
+  sudo: true
+  sudo_user: postgres
+  postgresql_user: >
+    user=insacloud
+    password=insacloud
+    role_attr_flags=CREATEDB,NOSUPERUSER
+
+# TODO : variabilize
+- name: Create insacloud
+  sudo_user: postgres
+  postgresql_db: >
+    name=insacloud
+    owner=insacloud
+    login_user=insacloud
+    login_password=insacloud
+
+# REPLACE TODO
+#- postgresql_user: db=insacloud name=insacloud password=insacloud priv=CONNECT/far:ALL
+
+- name: Configures postgres
+  template: src={{ item }}.j2 dest=/etc/postgresql/9.4/main/{{ item }}
+  with_items:
+    - pg_hba.conf # need to
+    - postgresql.conf # need to write good conf
+  notify: Restart postgres
