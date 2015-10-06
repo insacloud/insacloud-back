@@ -1,0 +1,5 @@
+#!/bin/env ansible-playbook
+
+- hosts: insacloud-back
+  roles:
+    - role-python
