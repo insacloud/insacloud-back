@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import ImageFormatter
 from PIL import Image
 import math
@@ -65,6 +66,18 @@ for k in range(t, 0, -1):
 
 
 
+=======
+import DatabaseManager, logging
+
+databaseName = "events.db"
+event1 = "Concert_Mika_2012"
+
+dbMan = DatabaseManager.SqliteManager(databaseName)
+
+dbMan.CreateEvent(event1)
+
+dbMan.InsertPicture(event1, ["80", "Mika1.jpg"])
+>>>>>>> Started working on storing the images in a small sqlite database (can be modified later...) so that the mosaic-python stuff can request images according to their dominant color, from the database
 
 
 
