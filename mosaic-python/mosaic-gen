@@ -1,0 +1,7 @@
+#!/bin/bash
+
+python2 base-project/mosaic.py -i baseMosaique.jpg -s img-base/ -r 20 20 -t 10 10 -v 
+
+
+
+
