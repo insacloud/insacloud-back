@@ -1,10 +1,10 @@
 import sqlite3
 import logging
-import os
+from PIL import Image
 
 
 class SqliteManager:
-    
+
     """
     Import pictures taken by users.
     The database will be filled with entries like :
@@ -31,8 +31,11 @@ class SqliteManager:
     @raw is a list ('color', 'path')
     '''
     def insert_picture(self, event_name, row):
-        # Check picture file and place it to the correct directory
-        
+        # Try opening the image and analyse it :
+
+
+
+
         # Insert picture into database
         cursor = self.connection.cursor()
         logging.info("Row for insertion : ")
