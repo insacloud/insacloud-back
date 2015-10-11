@@ -1,0 +1,77 @@
+---
+- name: Check if python version is OK
+  command: python -V
+  register: __python_version_output
+  changed_when: False
+
+# - name: set var "__install_python"
+#   set_fact:
+#     __install_python: "{{ False if __python_version_output.stderr == 'Python 3.4.3' else True }}"
+
+- name: Check if python3.4 exists.
+  stat: path=/usr/local/bin/python3.4
+  register: __python34
+
+- name: Set var "__install_python"
+  set_fact:
+    #__install_python: "{{ False if __python_version_output.stderr == 'Python 3.4.3' else True }}"
+    __install_python: "{{ False if __python34.stat.exists else True }}"
+
+- name: Install required packages
+  apt: name={{ item }} state=present
+  with_items:
+   - build-essential
+   - dpkg-dev
+   - zlibc
+   - zlib1g
+   - zlib1g-dev
+   - libssl-dev
+   - openssl
+   - libssl-doc
+   - libreadline-gplv2-dev
+   - libncursesw5-dev
+   - libsqlite3-dev
+   - tk-dev 
+   - libgdbm-dev
+   - libc6-dev
+   - libbz2-dev
+
+- name: Download python sources
+  get_url: url=https://www.python.org/ftp/python/3.4.3/Python-3.4.3.tgz dest=/tmp/Python-3.4.3.tgz mode=0750
+  when: __install_python
+
+- name: Untar python sources
+  unarchive: src=/tmp/Python-3.4.3.tgz dest=/tmp/ copy=no
+  when: __install_python
+
+- name: ./configure python sources
+  shell: chdir=/tmp/Python-3.4.3/ ./configure
+  when: __install_python
+
+- name: Make python sources
+  shell: chdir=/tmp/Python-3.4.3/ make
+  when: __install_python
+
+- name: Make install python sources
+  shell: chdir=/tmp/Python-3.4.3/ make install
+  when: __install_python
+
+#- name: replace python bin
+#  file: src=/usr/local/bin/python3.4 dest=/usr/bin/python owner=root group=root mode=0777 state=link
+#  when: __install_python
+
+- name: Download pip sources
+  get_url: url=https://bootstrap.pypa.io/get-pip.py dest=/tmp/get-pip.py mode=0750
+  register: pip
+
+- name: Install pip
+  command: python /tmp/get-pip.py
+  when: pip.changed
+
+- name: Upgrade pip
+  pip: name=pip state=latest
+
+- name: Ensure virtualenv is present
+  pip: name=virtualenv state=present
+
+# cd/mkdir root project

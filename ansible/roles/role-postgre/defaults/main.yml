@@ -3,3 +3,9 @@ postgres9_version: 9.4
 postgres9_listen_addresses: '127.0.0.1'
 postgres9_max_connections: 100
 postgres9_shared_buffers: 128MB
+
+# postgres9_db_name: 
+# postgres9_db_host: 
+# postgres9_db_port: 
+# postgres9_user_name: 
+# postgres9__user_password: 

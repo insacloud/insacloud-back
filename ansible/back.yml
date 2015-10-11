@@ -3,3 +3,7 @@
 - hosts: insacloud-back
   roles:
     - role-postgre
+    - role-redis
+    - role-python
+    - role-nginx
+    - role-insacloud

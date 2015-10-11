@@ -1,0 +1,7 @@
+#TODO: set specific version
+- name: Install nginx
+  apt: pkg={{item}} state=installed update_cache=true
+  with_items:
+    - nginx
+
+#TODO: set config
