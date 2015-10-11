@@ -1,0 +1,12 @@
+---
+# insacloud_virtualenv_path
+# insacloud_appname
+# insacloud_user.name
+# insacloud_user.group
+# insacloud_django_static_url
+# insacloud_django_static_path: /tmp/static
+
+# gunicorn_nb_workers
+# gunicorn_listen_host
+# gunicorn_listen_port
+# 

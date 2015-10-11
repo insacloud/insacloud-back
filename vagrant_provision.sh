@@ -8,8 +8,6 @@ sudo apt-get upgrade -y
 sudo apt-get install python-pip python-dev -y
 sudo pip install -Iv ansible==1.9.3
 
-
-
 sudo rm -f /home/vagrant/.ssh/id_rsa /home/vagrant/.ssh/id_rsa.pub
 sudo mkdir -p /root/.ssh/
 su vagrant <<EOF

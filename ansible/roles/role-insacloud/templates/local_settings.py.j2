@@ -1,0 +1,28 @@
+from .settings import *
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': '{{postgres9_db_name}}',
+        'USER': '{{postgres9_user_name}}',
+        'PASSWORD': '{{postgres9__user_password}}',
+        'HOST': '{{postgres9_db_host}}',
+        'PORT': '{{postgres9_db_port}}',
+    }
+}
+
+CACHES = {
+    'default': {
+        'BACKEND': 'redis_cache.RedisCache',
+        'LOCATION': [
+            '{{redis_host}}:{{redis_port}}',
+        ]
+    }
+}
+
+# to variabilize
+STATIC_ROOT = '{{insacloud_django_static_path}}'
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+# persitance in db => 2 redis or keep that
+SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
+STATIC_URL = '{{insacloud_django_static_url}}'
