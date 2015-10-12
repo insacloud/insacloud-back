@@ -8,6 +8,7 @@ sudo apt-get upgrade -y
 sudo apt-get install python-pip python-dev -y
 sudo pip install -Iv ansible==1.9.3
 
+cd "$REPO_ROOT/ansible"
 for i in `find . -type f \( -name "hosts" \)`; do    sed -i 's/\r//' $i ; done
 sudo rm -f /home/vagrant/.ssh/id_rsa /home/vagrant/.ssh/id_rsa.pub
 sudo mkdir -p /root/.ssh/
