@@ -64,5 +64,4 @@ def ImportEvents():
 		#Add To the database
 		
 		AddToDatabase(events, location) 
-
 ImportEvents()
