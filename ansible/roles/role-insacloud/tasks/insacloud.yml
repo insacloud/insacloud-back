@@ -5,6 +5,7 @@
    - postgresql-client-9.4
    - libpq-dev
    - git
+   - libjpeg-dev # pillow (django image model)
 
 - name: Create virtual env folder
   file: path={{ insacloud_virtualenv_path }} state=directory mode=0755
@@ -86,6 +87,9 @@
 
 # force hanfler (strange bug)
 - meta: flush_handlers
+
+- name: set permissions
+  file: path={{insacloud_virtualenv_path}} recurse=yes state=directory owner={{insacloud_user.name}} group={{insacloud_user.group}}
 
 ## TODO prod
 ## - name: Set insacloud nginx conf
