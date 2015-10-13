@@ -1,9 +1,12 @@
 #!/usr/bin/env python
 import sys
 sys.path.append("..")
-sys.path.append("DAO")
+sys.path.append("dao")
+sys.path.append("config")
 import EventfulDAO
+import FileDAO
 
+from config import config_ImportEventDataService
 
 #test_key to change with a created key with an account
 api = EventfulDAO.API('test_key', cache='.cache')
@@ -20,6 +23,7 @@ def GetEventsByTypeByLocation(eventType="music", location='Lyon', image_sizes="o
 	return events
 	
 def AddToDatabase(events, location):
+	i = 0
 	if events != None and events['events'] != None:
 		for event in events['events']['event']:
 			print "\n------ADDING new event as\n"
@@ -49,15 +53,18 @@ def AddToDatabase(events, location):
 			if event['image'] != None:
 				if event['image']['url'] != None:
 					image = event['image']['url']
-					
-			image = image.replace('small', 'original')
-			print "image = %s" % (image)
+				image = image.replace('small', 'original')
+				print "image = %s" % (image)
+				#i= i+1
+				FileDAO.StorePoster(externalId, image)
+			
 	
+			
 			#use DAO to add in the database
 	
 def ImportEvents():
-	listVilles = ['Lyon']#, 'Villeurbanne', 'Oullins', 'Decines', 'Vaulx-en-Velin', 'Bron', 'Grenoble', 'Vienne']
-	for location in listVilles:
+	#listVilles = ['Lyon']#, 'Villeurbanne', 'Oullins', 'Decines', 'Vaulx-en-Velin', 'Bron', 'Grenoble', 'Vienne']
+	for location in config_ImportEventDataService['locations']:
 		print "\n---------- Getting musical events from %s -------------\n" % (location)
 		events = GetEventsByTypeByLocation('music', location)
 		PrintEvents(events)
