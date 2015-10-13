@@ -36,7 +36,7 @@ class SqliteManager:
         self.connection.close()
 
     """
-
+        Check whether an event has already been registered in the base or not.
     """
     def has_event(self, event_name):
         cursor = self.connection.cursor()
