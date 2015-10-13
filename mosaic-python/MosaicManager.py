@@ -16,17 +16,24 @@ class MosaicManager:
         with the id returned.
         - If you want the get the final mosaic for an event, you call GetMosaic
 
-        The image folder tree should be :
+        The image folder tree should be something like (to be defined precisely later):
         --- img
             |- Concert_Mika             // name of the event, corresponding to a table name in the database
-            |   |- img1.jpg             // the number after img is set by the DatabaseManager, it's the id returned
-            |   |- img2.jpg
-            |   |- ...
-            |   |- img255.jpg
+            |   |- Mosaic.jpg
+            |   |- Big                      // big images (max 200 ko) that will be sent when user zoom
+            |   |   |- img1.jpg             // the number after img is set by the DatabaseManager, it's the id returned
+            |   |   |- img2.jpg
+            |   |   |- ...
+            |   |   |- img255.jpg
+            |   |- Small                    // small images that will be used to create the mosaic
+            |   |   |- img1.jpg             // the number after img is set by the DatabaseManager, it's the id returned
+            |   |   |- img2.jpg
+            |   |   |- ...
+            |   |   |- img255.jpg
             |- Concert_Queen            // idem
-            |   |- img1.jpg
-            |   |- ...
-            |   |- img255.jpg
+            |   |- Mosaic.jpg
+            |   |- Big
+            |   |- Small
     """
 
     def __init__(self, database):

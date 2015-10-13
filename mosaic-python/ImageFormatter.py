@@ -7,6 +7,7 @@ import logging
 class ImageFormatter:
 
     def __init__(self, image_path):
+
         self.image_path = image_path
         try:
             self.image = Image.open(image_path)
@@ -18,10 +19,14 @@ class ImageFormatter:
         self.__crop_image(self.image)
         color = self.__get_main_color(self.image)
 
+
         return color
 
     def save_image(self, image_path):
-        self.__resize_image() #fixed size for now maybe 5x5 px ?
+        # First, save the full version in "Big" folder (see MosaicManager.py)
+        # Then resize (for now maybe 5x5 px) and save image in "Small" folder, for the mosaic generation
+        # resized_image = self.__resize_image()
+
         pass
 
     """
@@ -58,7 +63,9 @@ class ImageFormatter:
 
     """
         resize input image so that it can be saved and then directly used in a mosaic if needed.
-        Recommanded size 5x5px (not sure though)
+        Recommanded size 5x5px (not sure though) -> warning: we must also keep a good quality image, so that
+        user can zoom in on the smartphone and get the bigger image.
     """
     def __resize_image(self):
+        # self.image.
         pass
