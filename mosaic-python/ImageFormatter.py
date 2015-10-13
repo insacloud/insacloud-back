@@ -18,8 +18,6 @@ class ImageFormatter:
     def process_image(self):
         self.__crop_image(self.image)
         color = self.__get_main_color(self.image)
-
-
         return color
 
     def save_image(self, image_path):
@@ -30,7 +28,8 @@ class ImageFormatter:
         pass
 
     """
-        Crop input image so that you get a square image (not resized yet, only croped)
+        Crop input image so that you get a square image (no resize yet, only crop)
+        NOT TESTED (and it should be)
     """
     def __crop_image(self):
         im_width, im_height = self.image.size
@@ -41,6 +40,11 @@ class ImageFormatter:
             self.image = self.image.crop((im_height/2-im_width/2), 0, (im_height/2+im_width/2), im_width)
         else:
             pass
+
+    # I guess this will be used only at the beginning, then we should switch to colours.
+    def __black_and_white(self):
+        self.image.convert('L')
+
 
     def __get_main_color(self):
         # For now, it uses the function from base-project
