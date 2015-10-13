@@ -1,6 +1,6 @@
 import sqlite3
 import logging
-from PIL import Image
+import ImageFormatter as imp
 
 
 class SqliteManager:
@@ -17,9 +17,34 @@ class SqliteManager:
 
     def __init__(self, database):
         self.connection = sqlite3.connect(database)
+        self.__create_events_table()
+
+    """
+        Try to create the Events table in the database, used to record
+        all different events for which we have or will have images.
+    """
+    def __create_events_table(self):
+        cursor = self.connection.cursor()
+        try:
+            ''' could use sqlite_master and just look for the event name in the table names, but this way, we can add
+                data to the events... '''
+            cursor.execute('CREATE TABLE Events (id INTEGER PRIMARY KEY, name TEXT)')    # note : date might be added later
+        except IOError:
+            logging.info("'Events' table exists.")
 
     def close_connection(self):
         self.connection.close()
+
+    """
+
+    """
+    def has_event(self, event_name):
+        cursor = self.connection.cursor()
+        cursor.execute("Select * from Events where name="+event_name)
+        ans = cursor.fetchone()
+        if ans is not None:
+            return True
+        return False
 
     def create_event(self, event_name):
         cursor = self.connection.cursor()
@@ -30,12 +55,7 @@ class SqliteManager:
     @eventName is the name of the event where the picture was taken. It's a table name in the database
     @raw is a list ('color', 'path')
     '''
-    def insert_picture(self, event_name, row):
-        # Try opening the image and analyse it :
-
-
-
-
+    def insert_picture(self, event_name, path):
         # Insert picture into database
         cursor = self.connection.cursor()
         logging.info("Row for insertion : ")
@@ -43,3 +63,8 @@ class SqliteManager:
         cursor.execute('INSERT INTO ' + event_name + ' VALUES (?,?)', row)
         self.connection.commit()
         logging.info('New picture inserted (color = ' + row[0] + ', path = ' + row[1] + ')')
+
+class PostGreManager:
+    # Later ?
+    pass
+Architecture transformation : entry point is now MosaicManager and it relies on two classes : ImageFormatter from ImageFormatter.py and SqliteManager from DatabaseManager.py
