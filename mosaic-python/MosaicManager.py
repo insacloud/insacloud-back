@@ -1,5 +1,5 @@
 import ImageFormatter as ImFormat
-import DatabaseManager as DBman
+import DatabaseManager as Dbman
 import logging
 
 
@@ -27,11 +27,10 @@ class MosaicManager:
             |   |- img1.jpg
             |   |- ...
             |   |- img255.jpg
-
     """
 
     def __init__(self, database):
-        self.sqlite_man = DBman.SqliteManager()
+        self.sqlite_man = Dbman.SqliteManager()
         self.known_events_cache = []
 
     def add_resource(self, event_name, image_path):
@@ -41,7 +40,7 @@ class MosaicManager:
             try:
                 self.sqlite_man.create_event(event_name)
             except Exception as e:
-                logging.error("Error raised when adding ressource image")
+                logging.error("Error raised when adding resource image")
                 raise e
 
         # Create image formatter and feed it with the image path
@@ -52,7 +51,7 @@ class MosaicManager:
             self.sqlite_man.create_event(event_name)
 
     """
-        Check wheher or not the event to which caller wants to add a picture has already been registered in the base or
+        Check whether or not the event to which caller wants to add a picture has already been registered in the base or
         not.
     """
     def __check_for_event(self, event_name):
