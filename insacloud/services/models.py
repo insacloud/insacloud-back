@@ -2,10 +2,10 @@ from django.db import models
 
 # Create your models here.
 class Event(models.Model):
-  id_source = models.IntegerField()
-  source = models.CharField(max_length=2)
-  date_start = models.DateTimeField()
-  date_end = models.DateTimeField()
+  id_source = models.IntegerField(null=True)
+  source = models.CharField(max_length=2, null=True)
+  date_start = models.DateTimeField(null=True)
+  date_end = models.DateTimeField(null=True)
   category = models.TextField()
   title = models.TextField()
   location = models.TextField()
