@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 class Event(models.Model):
   id_source = models.IntegerField()
-  source = models.CharField()
+  source = models.CharField(max_length=2)
   date_start = models.DateTimeField()
   date_end = models.DateTimeField()
   category = models.TextField()
