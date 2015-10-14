@@ -2,9 +2,10 @@ from django.db import models
 
 # Create your models here.
 class Event(models.Model):
-  eventfulID = models.IntegerField()
-  date = models.DateField()
-  duration = models.DurationField()
+  id_source = models.IntegerField()
+  source = Model.CharField()
+  date_start = models.DateTimeField()
+  date_end = models.DateTimeField()
   category = models.TextField()
   title = models.TextField()
   location = models.TextField()
@@ -16,7 +17,7 @@ class Event(models.Model):
 class Picture(models.Model):
   path = models.ImageField()
   event = models.ForeignKey(Event)
-  luminosity = models.IntegerField()
+  hue = models.IntegerField()
   # other img properties
 
 class Mosaic(models.Model):
