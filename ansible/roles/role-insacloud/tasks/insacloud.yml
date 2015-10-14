@@ -1,4 +1,7 @@
 ---
+###############################################################################
+# Install packages ############################################################
+###############################################################################
 - name: Install required packages
   apt: name={{item}} state=installed
   with_items:
@@ -6,41 +9,23 @@
    - libpq-dev
    - git
    - libjpeg-dev # pillow (django image model)
+   - supervisor=3.0r1-1
 
-- name: Create virtual env folder
-  file: path={{ insacloud_virtualenv_path }} state=directory mode=0755
-
-# only works from ansible 2.0
-#- name: Create virtual env and install requirements
-#  pip: requirements=/{{insacloud_virtualenv_path}}/{{insacloud_appname}}/requirements.txt virtualenv={{insacloud_virtualenv_path}} virtualenv_python=python3.4 virtualenv_site_packages=no
-
-# check if virtualenv already exists
-- stat: path={{insacloud_virtualenv_path}}/bin/activate
-  register: virtualenv
-
-- name: Install virtualenv
-  shell: virtualenv -p /usr/local/bin/python3.4 --no-site-packages {{insacloud_virtualenv_path}}
-  changed_when: virtualenv.stat.exists == False
-  when: virtualenv.stat.exists == False
-
-# - name: Install env requirements
-#   pip: name={{item}} virtualenv={{insacloud_virtualenv_path}}
-#   with_items:
-#    - psycopg2
-#    - gunicorn
-#    - django
-#    - setproctitle # show gunicorn name process (eg. ps command)
-
-# replace
 - name: Symbolic sources link
   file: src={{insacloud_path_repo}}/{{insacloud_appname}} dest={{insacloud_virtualenv_path}}/{{insacloud_appname}} owner={{insacloud_user.name}} group={{insacloud_user.group}} state=link
 
-- name: Set sources folder permissions
-  file: path={{insacloud_path_repo}}/{{insacloud_appname}} recurse=yes state=directory owner={{insacloud_user.name}} group={{insacloud_user.group}}
+# test && remove
+# - name: Set sources folder permissions
+#   file: path={{insacloud_path_repo}}/{{insacloud_appname}} recurse=yes state=directory owner={{insacloud_user.name}} group={{insacloud_user.group}}
+
+###############################################################################
+# Init Django #################################################################
+###############################################################################
 
 - name: Install project requirements
   pip: requirements={{insacloud_virtualenv_path}}/{{insacloud_appname}}/requirements.txt virtualenv={{insacloud_virtualenv_path}}
 
+# replace dest if we need to run vagrant with admin rights
 - name: Generate django conf
   template: src=local_settings.py.j2 dest=/tmp/local_settings.py  owner={{insacloud_user.name}} group={{insacloud_user.group}} # dest={{insacloud_path_repo}}/{{insacloud_appname}}/{{insacloud_appname}}/local_settings.py
 
@@ -70,11 +55,12 @@
     virtualenv: "{{ insacloud_virtualenv_path }}"
     settings: "insacloud.local_settings"
 
+###############################################################################
+# Configuration files #########################################################
+###############################################################################
+
 - name: Generate gunicorn launcher
   template: src=gunicorn_start.j2 dest={{insacloud_virtualenv_path}}/bin/gunicorn_start owner={{insacloud_user.name}} group={{insacloud_user.group}} mode=0755
-
-- name: Ensure supervisor is installed
-  apt: name=supervisor=3.0r1-1 state=present
 
 - name: Removes nginx default servers
   file: path=/etc/nginx/sites-enabled/{{item}} state=absent
@@ -87,9 +73,6 @@
 
 # force hanfler (strange bug)
 - meta: flush_handlers
-
-- name: set permissions
-  file: path={{insacloud_virtualenv_path}} recurse=yes state=directory owner={{insacloud_user.name}} group={{insacloud_user.group}}
 
 ## TODO prod
 ## - name: Set insacloud nginx conf
@@ -111,6 +94,13 @@
 
 # force hanfler (strange bug)
 - meta: flush_handlers
+
+###############################################################################
+# [re]Start services ##########################################################
+###############################################################################
+
+- name: set permissions
+  file: path={{insacloud_virtualenv_path}} recurse=yes state=directory owner={{insacloud_user.name}} group={{insacloud_user.group}}
 
 - name: Re-read the Supervisor config files
   supervisorctl: name={{ insacloud_appname }} state=present

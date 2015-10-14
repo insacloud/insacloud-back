@@ -1,8 +1,15 @@
 # insacloud-back
+---
 This is THE BACK
 
-## Get started
+## Useful stuff
+---
+### urls
+http://localhost:8080/admin/  
+http://localhost:8080/api/  
 
+## Get started
+---
 ### Set up dev environment
 
 You have to install
@@ -28,14 +35,12 @@ To run django commands you need to have virtualenv enabled :
 - ``source bin/activate``
 - When you have finish : ``deactivate``
 
-**Resart server** : (to update changes)
+**Resart server :**
 - ``sudo supervisorctl restart insacloud``
 
-**Restart serrver + misc operations (make migrations ...)** :
-- ``cd /vagrant/ansible``
-- ``ansible-playbook -i inventories/dev site.yml``
+**Redeploy sproject :** (to excute django migrations ...)
+- ``deploy_local``
 
 ## TODO
-
+---
 - Implement data feed system for developpment
-- Test vagrant with linux (files permissions)

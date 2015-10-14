@@ -1,3 +1,4 @@
 ---
+- include: virtualenv.yml
 - include: dao.yml
 - include: insacloud.yml
