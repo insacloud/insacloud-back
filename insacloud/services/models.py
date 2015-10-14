@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 class Event(models.Model):
   id_source = models.IntegerField()
-  source = Model.CharField()
+  source = models.CharField()
   date_start = models.DateTimeField()
   date_end = models.DateTimeField()
   category = models.TextField()
@@ -15,7 +15,6 @@ class Event(models.Model):
   poster = models.ImageField()
 
 class Picture(models.Model):
-  path = models.ImageField()
   event = models.ForeignKey(Event)
   hue = models.IntegerField()
   # other img properties
