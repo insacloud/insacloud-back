@@ -28,27 +28,22 @@
 # force hanfler (strange bug)
 - meta: flush_handlers
 
-# TODO : variabilize
-- name: Create User insacloud
+- name: Create User {{postgres9_user_name}}
   sudo: yes
   sudo_user: postgres
   postgresql_user: >
-    user=insacloud
-    password=insacloud
+    user="{{postgres9_user_name}}"
+    password="{{postgres9__user_password}}"
     role_attr_flags=CREATEDB,NOSUPERUSER
 
-# TODO : variabilize
-- name: Create Database insacloud
+- name: Create Database {{postgres9_db_name}}
   sudo: yes
   sudo_user: postgres
   postgresql_db: >
-    name=insacloud
-    owner=insacloud
-    login_user=insacloud
-    login_password=insacloud
+    name=""{{postgres9_db_name}}""
+    owner="{{postgres9_user_name}}"
+    login_user="{{postgres9_user_name}}"
+    login_password="{{postgres9__user_password}}"
     encoding='UTF-8'
     lc_collate='en_US.UTF-8'
     lc_ctype='en_US.UTF-8'
-
-# REPLACE TODO
-#- postgresql_user: db=insacloud name=insacloud password=insacloud priv=CONNECT/far:ALL

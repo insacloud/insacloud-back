@@ -1,14 +1,14 @@
 #!/bin/bash
 
-NAME="{{insacloud_appname}}"                                  # Name of the application
-DJANGODIR={{insacloud_virtualenv_path}}/{{insacloud_appname}}             # Django project directory
-SOCKFILE={{insacloud_virtualenv_path}}/run/gunicorn.sock  # we will communicte using this unix socket
-USER={{insacloud_user.name}}                                        # the user to run as
-GROUP={{insacloud_user.group}}                                     # the group to run as
+NAME="{{insacloud_appname}}"                                 	# Name of the application
+DJANGODIR={{insacloud_virtualenv_path}}/{{insacloud_appname}}   # Django project directory
+SOCKFILE={{insacloud_virtualenv_path}}/run/gunicorn.sock  		# we will communicte using this unix socket
+USER={{insacloud_user.name}}                                    # the user to run as
+GROUP={{insacloud_user.group}}                                  # the group to run as
 # --workers (NUM_WORKERS) according to the following formula: 2 * CPUs + 1
-NUM_WORKERS={{gunicorn_nb_workers}}                                     # how many worker processes should Gunicorn spawn
-DJANGO_SETTINGS_MODULE={{insacloud_appname}}.local_settings             # which settings file should Django use
-DJANGO_WSGI_MODULE={{insacloud_appname}}.wsgi                     # WSGI module name
+NUM_WORKERS={{gunicorn_nb_workers}}                             # how many worker processes should Gunicorn spawn
+DJANGO_SETTINGS_MODULE={{insacloud_appname}}.local_settings     # which settings file should Django use
+DJANGO_WSGI_MODULE={{insacloud_appname}}.wsgi                   # WSGI module name
 BIND={{gunicorn_listen_host}}:{{gunicorn_listen_port}}
 
 echo "Starting $NAME as `whoami`"

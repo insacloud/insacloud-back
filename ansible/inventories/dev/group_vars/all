@@ -9,7 +9,7 @@ postgres9_db_port: 5432
 postgres9_user_name: insacloud
 postgres9__user_password: insacloud
 
-# TODO replace vagrant => create user
+# Replace "vagrant" by your user if you don't use vagrant
 insacloud_virtualenv_path: /home/vagrant/insacloud
 insacloud_appname: insacloud
 insacloud_user:

@@ -1,4 +1,6 @@
 ---
+# TODO variabilize python version
+
 - name: Check if python version is OK
   command: python -V
   register: __python_version_output

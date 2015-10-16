@@ -1,0 +1,12 @@
+---
+# check if virtualenv already exists
+- stat: path={{insacloud_virtualenv_path}}/bin/activate
+  register: virtualenv
+
+- name: Install virtualenv
+  shell: virtualenv -p /usr/local/bin/python3.4 --no-site-packages {{insacloud_virtualenv_path}}
+  changed_when: virtualenv.stat.exists == False
+  when: virtualenv.stat.exists == False
+
+- name: Create virtual env folder
+  file: path={{ insacloud_virtualenv_path }} state=directory mode=0755
