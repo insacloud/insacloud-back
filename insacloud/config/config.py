@@ -7,5 +7,7 @@ config_FileDAO = {
 
 
 config_ImportEventDataService = {
-	'locations':['Lyon', 'Villeurbanne', 'Oullins', 'Decines', 'Vaulx-en-Velin', 'Bron', 'Grenoble', 'Vienne']
+	'locations':['Lyon', 'Villeurbanne', 'Oullins', 'Decines', 'Vaulx-en-Velin', 'Bron', 'Grenoble', 'Vienne'],
+	'categories':['music', 'circus', 'movie', 'festival', 'party'],
+	'image_sizes':'original'
 	}
