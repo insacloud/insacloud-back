@@ -5,6 +5,7 @@ sys.path.append("dao")
 sys.path.append("config")
 import EventfulDAO
 import FileDAO
+import EventDAO
 
 from config import config_ImportEventDataService
 
@@ -70,8 +71,21 @@ def AddToDatabase(events, category, location):
 					#i= i+1
 					FileDAO.StorePoster(id_source, image)
 					
-				
-					#use DAO to add in the database
+					
+					#calling DAO
+					# EventDAO.TryAndAddNewEvent(
+					# id_source,
+					# source, 
+					# date_start, 
+					# date_end, 
+					# category, 
+					# title, 
+					# location,
+					# venue,
+					# longitude,
+					# latitude,
+					# image
+					# )
 	
 def ImportEvents():
 	for location in config_ImportEventDataService['locations']:
