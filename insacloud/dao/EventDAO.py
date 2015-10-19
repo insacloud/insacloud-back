@@ -33,7 +33,9 @@ def TryAndAddNewEvent(id_source_new,
 						  longitude,
 						  latitude,
 						  poster)
+		event.save()
 		print "OK--- Event Add to database"
+		
 	else:
 		print "WARNING--- Event already exists"
 	
