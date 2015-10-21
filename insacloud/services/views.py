@@ -5,6 +5,7 @@ from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from services.models import Event, Picture, Mosaic, Mosaic_cell
 from services.serializers import UserSerializer, GroupSerializer, EventSerializer, PictureSerializer, MosaicSerializer, Mosaic_cellSerializer
+from django.conf import settings
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -36,13 +37,14 @@ class PictureViewSet(viewsets.ModelViewSet):
   serializer_class = PictureSerializer
 
   def perform_create(self, serializer):
-    # Include the owner attribute directly, rather than from request data.
+    import os
     picture = serializer.save()
-    picture.hue = picture.id
+
+    buff = picture.image.name
+    fn, ext = os.path.splitext(picture.image.name)
+    picture.image.name = settings.UPLOAD_PATH+"{eventId}_{id}{ext}".format(id=picture.id, eventId=picture.event.id, ext=ext)
+    os.rename(buff, picture.image.name)
     picture.save()
-    # Perform a custom post-save action.
-    #instance.image=instance.hue
-    #return instance
 
 class MosaicViewSet(viewsets.ModelViewSet):
   """
