@@ -4,10 +4,8 @@ import urllib2
 import os
 
 sys.path.append("..")
-sys.path.append("../../services")
-sys.path.append("services/config")
-
-from import_config import config_FileDAO
+import config
+from config.import_config import config_FileDAO
 
 def StorePoster(idEvent, urlPoster):
 	# file to be written to
