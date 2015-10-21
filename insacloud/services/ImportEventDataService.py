@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 import sys
-sys.path.append("..")
 sys.path.append("dao")
 sys.path.append("config")
-import EventfulDAO
-import FileDAO
-import EventDAO
+import dao.EventfulDAO
+import dao.FileDAO
+import dao.EventDAO
 
-from config import config_ImportEventDataService
+from dao import *
+from import_config import config_ImportEventDataService
 
 #test_key to change with a created key with an account
 api = EventfulDAO.API('test_key', cache='.cache')
