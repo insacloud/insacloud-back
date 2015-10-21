@@ -29,6 +29,28 @@ class EventViewSet(viewsets.ModelViewSet):
   queryset = Event.objects.all()
   serializer_class = EventSerializer
 
+  def perform_create(self, serializer):
+    import os
+    event = serializer.save()
+    buff = event.poster.name
+    fn, ext = os.path.splitext(event.poster.name)
+    event.poster.name = settings.UPLOAD_PATH+"poster_{id}{ext}".format(id=event.id, ext=ext)
+    os.rename(buff, event.poster.name)
+    event.save()
+
+  def get_queryset(self):
+    """
+    Optionally restricts the returned purchases to a given user,
+    by filtering against a `username` query parameter in the URL.
+    """
+    queryset = Event.objects.all()
+    longitude = self.request.query_params.get('longitude', None)
+    latitude = self.request.query_params.get('latitude', None)
+    if longitude is not None and latitude is not None:
+      print("o")
+      queryset = queryset.filter(Event__longitude=longitude)
+    return queryset
+
 class PictureViewSet(viewsets.ModelViewSet):
   """
   API endpoint that allows groups to be viewed or edited.
@@ -39,7 +61,6 @@ class PictureViewSet(viewsets.ModelViewSet):
   def perform_create(self, serializer):
     import os
     picture = serializer.save()
-
     buff = picture.image.name
     fn, ext = os.path.splitext(picture.image.name)
     picture.image.name = settings.UPLOAD_PATH+"{eventId}_{id}{ext}".format(id=picture.id, eventId=picture.event.id, ext=ext)
