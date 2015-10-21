@@ -43,9 +43,9 @@ for k in range(t, 0, -1):
     for x in range(0, len(matrixA)):
         for y in range(0, len(matrixA)):
             #paste(matrixA[x][y], (x*64, y*64,(x+1)*64, (y+1)*64))
-            i = int(y/16)
-            j = int(x/16)
-            print str(x)+"-"+str(y)+"|"+str(j)+"-"+str(i)
+            i = int(y/len(matrixA)/z)
+            j = int(x/len(matrixA)/z)
+            #print str(x)+"-"+str(y)+"|"+str(j)+"-"+str(i)
             matrixB[j][i].paste(image, (x*64, y*64,(x+1)*64, (y+1)*64))
 
     matrixA = [[0 for i in range(4)] for i in range(4)]
