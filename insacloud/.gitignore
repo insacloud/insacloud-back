@@ -12,5 +12,6 @@ eggs
 log
 parts
 media/uploads
+media/pictures
 tmp
 .DS_Store

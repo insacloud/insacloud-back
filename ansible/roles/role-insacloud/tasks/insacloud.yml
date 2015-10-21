@@ -34,6 +34,9 @@
   command: cp -f /tmp/local_settings.py {{insacloud_path_repo}}/{{insacloud_appname}}/{{insacloud_appname}}/local_settings.py
   changed_when: False
 
+- name: Create upload folder
+  file: path={{insacloud_django_upload_path}} recurse=yes state=directory owner={{insacloud_user.name}} group={{insacloud_user.group}}
+
 - name: Run the Django syncdb command
   django_manage:
     command: makemigrations
