@@ -4,15 +4,19 @@ import urllib2
 import os
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 os.environ['DJANGO_SETTINGS_MODULE'] = "insacloud.settings"
 sys.path.append("..")
 from services.models import Event
 from django.core.files import File
 =======
+=======
+>>>>>>> Reorganisation
 sys.path.append("..")
 sys.path.append("config")
 sys.path.append("services")
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 #from models import Event
 >>>>>>> Reorganisation
@@ -24,6 +28,9 @@ sys.path.append("..")
 from services.models import Event
 from django.core.files import File
 >>>>>>> Import is fonctionnal: adding to the database works
+=======
+#from models import Event
+>>>>>>> Reorganisation
 
 def TryAndAddNewEvent(id_source_new,
 					  source, 
@@ -35,6 +42,7 @@ def TryAndAddNewEvent(id_source_new,
 					  venue,
 					  longitude,
 					  latitude,
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -105,6 +113,8 @@ def TryAndAddNewEvent(id_source_new,
 <<<<<<< HEAD
 		print "\n\n\nWARNING--- Event already exists (IGNORED)\n\n\n"
 =======
+=======
+>>>>>>> Reorganisation
 					  poster):
 		
 	# existent = Event.objects.filter(id_source=id_source_new)
@@ -125,6 +135,7 @@ def TryAndAddNewEvent(id_source_new,
 		
 	# else:
 		print "WARNING--- Event already exists"
+<<<<<<< HEAD
 	
 >>>>>>> Reorganisation
 =======
@@ -133,3 +144,6 @@ def TryAndAddNewEvent(id_source_new,
 =======
 		print "\n\n\nWARNING--- Event already exists (IGNORED)\n\n\n"
 >>>>>>> ImportService self runnable
+=======
+	
+>>>>>>> Reorganisation
