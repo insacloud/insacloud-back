@@ -34,12 +34,30 @@ for x in range(image.size[0]):
         matrixA[x][y] = image
 
 
-for i in range(t, 0, -1):
-    print i
-    im = Image.new('L', (int(64*math.pow(z,i)), int(64*math.pow(z,i))))
-    for x in range(0, len(matrixA)/z):
-        for y in range(0, len(matrixA)/z):
-            im.paste(matrixA[x][y], (x*64, y*64,(x+1)*64, (y+1)*64))
+for k in range(t, 0, -1):
+    print k
+    dim1 = (len(matrixA)/z)*64
+    matrixB = [[Image.new('L', (dim1,dim1)) for i in range(4)] for i in range(4)]
+    dim2 = int(64*math.pow(z,k))
+    print len(matrixA)
+    for x in range(0, len(matrixA)):
+        for y in range(0, len(matrixA)):
+            #paste(matrixA[x][y], (x*64, y*64,(x+1)*64, (y+1)*64))
+            i = int(y/16)
+            j = int(x/16)
+            print str(x)+"-"+str(y)+"|"+str(j)+"-"+str(i)
+            matrixB[j][i].paste(image, (x*64, y*64,(x+1)*64, (y+1)*64))
+
+    matrixA = [[0 for i in range(4)] for i in range(4)]
+
+    for x in range(len(matrixB)):
+        for y in range(len(matrixB)):
+            matrixB[x][y] = matrixB[x][y].resize((64,64), Image.ANTIALIAS)
+            # Sauvegarde matrixB comme mosaic
+            matrixA[x][y] = matrixB[x][y]
+
+    matrixA[0][0].show()
+
 
 
 # im.show()
