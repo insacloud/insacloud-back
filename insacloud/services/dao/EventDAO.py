@@ -2,10 +2,18 @@
 import sys
 import urllib2
 import os
+<<<<<<< HEAD
 os.environ['DJANGO_SETTINGS_MODULE'] = "insacloud.settings"
 sys.path.append("..")
 from services.models import Event
 from django.core.files import File
+=======
+sys.path.append("..")
+sys.path.append("config")
+sys.path.append("services")
+
+#from models import Event
+>>>>>>> Reorganisation
 
 def TryAndAddNewEvent(id_source_new,
 					  source, 
@@ -17,6 +25,7 @@ def TryAndAddNewEvent(id_source_new,
 					  venue,
 					  longitude,
 					  latitude,
+<<<<<<< HEAD
 					  poster_url):
 	try:
 		existent = Event.objects.get(id_source=id_source_new)
@@ -73,3 +82,26 @@ def TryAndAddNewEvent(id_source_new,
 
 	else:
 		print "\n\n\nWARNING--- Event already exists (IGNORED)\n\n\n"
+=======
+					  poster):
+		
+	# existent = Event.objects.filter(id_source=id_source_new)
+	# if 	existent == None:	  
+		# event = Event(id_source_new,
+						  # source, 
+						  # date_start, 
+						  # date_end, 
+						  # category, 
+						  # title, 
+						  # location,
+						  # venue,
+						  # longitude,
+						  # latitude,
+						  # poster)
+		# event.save()
+		# print "OK--- Event Add to database"
+		
+	# else:
+		print "WARNING--- Event already exists"
+	
+>>>>>>> Reorganisation
