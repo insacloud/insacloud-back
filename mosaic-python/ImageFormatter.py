@@ -77,6 +77,5 @@ class ImageFormatter:
         Recommanded size 5x5px (not sure though) -> warning: we must also keep a good quality image, so that
         user can zoom in on the smartphone and get the bigger image.
     """
-    def __resize_image(self):
-        # self.image.
-        pass
+    def __resize_image(self, w, h):
+        self.image.resize((w,h), Image.ANTIALIAS)
