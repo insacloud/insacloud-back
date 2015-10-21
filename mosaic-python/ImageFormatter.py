@@ -16,8 +16,12 @@ class ImageFormatter:
             raise IOError
 
     def process_image(self):
-        self.__crop_image(self.image)
-        color = self.__get_main_color(self.image)
+        #self.__crop_image(self.image)
+
+        #color = self.__get_main_color()
+        color = 255
+        self.__black_and_white()
+
         return color
 
     def save_image(self, image_path):
@@ -26,6 +30,9 @@ class ImageFormatter:
         # resized_image = self.__resize_image()
 
         pass
+
+    def get_image(self):
+        return self.image
 
     """
         Crop input image so that you get a square image (no resize yet, only crop)
@@ -43,7 +50,7 @@ class ImageFormatter:
 
     # I guess this will be used only at the beginning, then we should switch to colours.
     def __black_and_white(self):
-        self.image.convert('L')
+        self.image = self.image.convert('L')
 
 
     def __get_main_color(self):
