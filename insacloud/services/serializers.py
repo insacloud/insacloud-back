@@ -16,7 +16,7 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 class EventSerializer(serializers.HyperlinkedModelSerializer):
   class Meta:
     model = Event
-    fields = ('url', 'id_source', 'source', 'date_start', 'date_end', 'title', 'location', 'venue', 'longitude', 'latitude', 'poster')
+    fields = ('url', 'id_source', 'source', 'date_start', 'date_end', 'title', 'location', 'venue', 'latitude', 'longitude', 'poster')
 
 class PictureSerializer(serializers.HyperlinkedModelSerializer):
   class Meta:

@@ -2,6 +2,18 @@
 ---
 This is THE BACK
 
+## API
+
+restful
+- http://localhost:8080/api/  
+
+filters
+- ``/api/events/``
+  - ``latitude``
+  - ``longitude``
+  - ``radius`` (km)
+
+
 ## Useful stuff
 ---
 ### urls
