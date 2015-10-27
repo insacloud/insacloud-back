@@ -30,10 +30,10 @@ do
 CMD="cd \"$REPO_ROOT/ansible\" && ansible-playbook -i \"inventories/$target\" site.yml"
 echo "command need to be executed as user: $USER"
 if [ \$USER = "$USER" ]; then
-    \$CMD
+    eval "\$CMD"
 else
     su $USER <<XXX
-\$CMD
+eval "\$CMD"
 XXX
 fi
 EOF
