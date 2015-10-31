@@ -75,5 +75,4 @@ def TryAndAddNewEvent(id_source_new,
 		
 
 	else:
-		print "\n\n\nWARNING--- Event already exists\n\n\n"
->>>>>>> Import is fonctionnal: adding to the database works
+		print "\n\n\nWARNING--- Event already exists (IGNORED)\n\n\n"
