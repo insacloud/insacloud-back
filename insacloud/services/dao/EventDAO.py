@@ -18,6 +18,7 @@ sys.path.append("services")
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 #from models import Event
 >>>>>>> Reorganisation
 =======
@@ -31,6 +32,11 @@ from django.core.files import File
 =======
 #from models import Event
 >>>>>>> Reorganisation
+=======
+os.environ['DJANGO_SETTINGS_MODULE'] = "insacloud.settings"
+from services.models import Event
+from django.core.files import File
+>>>>>>> Import is fonctionnal: adding to the database works
 
 def TryAndAddNewEvent(id_source_new,
 					  source, 
@@ -45,6 +51,9 @@ def TryAndAddNewEvent(id_source_new,
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Import is fonctionnal: adding to the database works
 =======
 >>>>>>> Import is fonctionnal: adding to the database works
 					  poster_url):
@@ -83,12 +92,15 @@ def TryAndAddNewEvent(id_source_new,
 		event.id_source = id_source_new
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		event.source = source
 =======
 >>>>>>> Import is fonctionnal: adding to the database works
 =======
 		event.source = source
 >>>>>>> ++
+=======
+>>>>>>> Import is fonctionnal: adding to the database works
 		event.date_start = date_start
 		event.date_end = date_end
 		event.category = category
@@ -109,6 +121,7 @@ def TryAndAddNewEvent(id_source_new,
 		
 
 	else:
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 		print "\n\n\nWARNING--- Event already exists (IGNORED)\n\n\n"
@@ -147,3 +160,6 @@ def TryAndAddNewEvent(id_source_new,
 =======
 	
 >>>>>>> Reorganisation
+=======
+		print "\n\n\nWARNING--- Event already exists\n\n\n"
+>>>>>>> Import is fonctionnal: adding to the database works
