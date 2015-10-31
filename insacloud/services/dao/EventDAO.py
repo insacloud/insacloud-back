@@ -75,4 +75,4 @@ def TryAndAddNewEvent(id_source_new,
 		
 
 	else:
-		print "\n\n\nWARNING--- Event already exists\n\n\n"
+		print "\n\n\nWARNING--- Event already exists (IGNORED)\n\n\n"
