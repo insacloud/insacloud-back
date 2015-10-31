@@ -2,10 +2,10 @@
 import sys
 import urllib2
 import os
-sys.path.append("..")
-sys.path.append("config")
-from config import config_FileDAO
 
+sys.path.append("..")
+import config
+from config.import_config import config_FileDAO
 
 def StorePoster(idEvent, urlPoster):
 	# file to be written to
@@ -27,3 +27,5 @@ def StorePoster(idEvent, urlPoster):
 	fh.close()
 	
 	print '-> stored poster as %s' % (file)
+	
+	return file
