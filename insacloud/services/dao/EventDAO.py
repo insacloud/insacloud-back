@@ -128,6 +128,7 @@ def TryAndAddNewEvent(id_source_new,
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		print "\n\n\nWARNING--- Event already exists (IGNORED)\n\n\n"
 =======
 =======
@@ -167,3 +168,6 @@ def TryAndAddNewEvent(id_source_new,
 =======
 		print "\n\n\nWARNING--- Event already exists\n\n\n"
 >>>>>>> Import is fonctionnal: adding to the database works
+=======
+		print "\n\n\nWARNING--- Event already exists (IGNORED)\n\n\n"
+>>>>>>> ImportService self runnable
