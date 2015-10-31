@@ -68,23 +68,23 @@ def AddToDatabase(events, category, location):
 					image = image.replace('small', 'original')
 					print "image = %s" % (image)
 					#i= i+1
-					FileDAO.StorePoster(id_source, image)
+					#file_location  = FileDAO.StorePoster(id_source, image)
 					
-					
+					file_url = image
 					#calling DAO
-					# EventDAO.TryAndAddNewEvent(
-					# id_source,
-					# source, 
-					# date_start, 
-					# date_end, 
-					# category, 
-					# title, 
-					# location,
-					# venue,
-					# longitude,
-					# latitude,
-					# image
-					# )
+					EventDAO.TryAndAddNewEvent(
+						id_source,
+						source, 
+						date_start, 
+						date_end, 
+						category, 
+						title, 
+						location,
+						venue,
+						longitude,
+						latitude,
+						file_url
+						)
 	
 def ImportEvents():
 	for location in config_ImportEventDataService['locations']:
