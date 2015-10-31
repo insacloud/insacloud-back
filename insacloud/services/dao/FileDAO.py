@@ -27,3 +27,5 @@ def StorePoster(idEvent, urlPoster):
 	fh.close()
 	
 	print '-> stored poster as %s' % (file)
+	
+	return file
