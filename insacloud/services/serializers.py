@@ -4,31 +4,31 @@ from rest_framework import serializers
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = User
-        fields = ('url', 'username', 'email', 'groups')
-
+  class Meta:
+    model = User
+    fields = ('url', 'username', 'email', 'groups')
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Group
-        fields = ('url', 'name')
+  class Meta:
+    model = Group
+    fields = ('url', 'name')
 
 class EventSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Event
-        fields = ('url', 'eventfulID', 'date', 'duration', 'category', 'title', 'location', 'venue', 'longitude', 'latitude', 'poster')
+  class Meta:
+    model = Event
+    fields = ('url', 'id_source', 'source', 'date_start', 'date_end', 'title', 'location', 'venue', 'latitude', 'longitude', 'poster')
 
 class PictureSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Picture
-        fields = ('url', 'path', 'luminosity')
+  class Meta:
+    model = Picture
+    fields = ('url', 'event', 'hue', 'image')
+
 class MosaicSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Mosaic
-        fields = ('url', 'event')
+  class Meta:
+    model = Mosaic
+    fields = ('url', 'event')
 
 class Mosaic_cellSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Mosaic_cell
-        fields = ('url', 'mosaic', 'picture', 'row', 'column')
+  class Meta:
+    model = Mosaic_cell
+    fields = ('url', 'mosaic', 'picture', 'row', 'column')
