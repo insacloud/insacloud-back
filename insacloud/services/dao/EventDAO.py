@@ -93,6 +93,7 @@ def TryAndAddNewEvent(id_source_new,
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		event.source = source
 =======
 >>>>>>> Import is fonctionnal: adding to the database works
@@ -101,6 +102,9 @@ def TryAndAddNewEvent(id_source_new,
 >>>>>>> ++
 =======
 >>>>>>> Import is fonctionnal: adding to the database works
+=======
+		event.source = source
+>>>>>>> ++
 		event.date_start = date_start
 		event.date_end = date_end
 		event.category = category
