@@ -26,8 +26,8 @@ class Event(models.Model):
   title = models.TextField()
   location = models.TextField()
   venue = models.TextField()
-  longitude = models.FloatField()
   latitude = models.FloatField()
+  longitude = models.FloatField()
   poster = models.ImageField(upload_to=settings.UPLOAD_PATH)
 
 class Picture(models.Model):
