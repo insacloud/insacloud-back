@@ -54,6 +54,7 @@ def TryAndAddNewEvent(id_source_new,
 		event = Event()
 		
 		event.id_source = id_source_new
+		event.source = source
 		event.date_start = date_start
 		event.date_end = date_end
 		event.category = category
