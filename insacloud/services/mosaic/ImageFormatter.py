@@ -16,20 +16,15 @@ class ImageFormatter:
             raise IOError
 
     def process_image(self):
-        #self.__crop_image(self.image)
-
-        #color = self.__get_main_color()
-        color = 255
+        self.__crop_image(self.image)
+        self.__resize_image(64,64)
         self.__black_and_white()
+        return self.__get_main_color_black()
 
-        return color
 
     def save_image(self, image_path):
-        # First, save the full version in "Big" folder (see MosaicManager.py)
-        # Then resize (for now maybe 5x5 px) and save image in "Small" folder, for the mosaic generation
-        # resized_image = self.__resize_image()
+        self.image.save(image_path)
 
-        pass
 
     def get_image(self):
         return self.image
