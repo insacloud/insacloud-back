@@ -16,7 +16,7 @@ mosaicMatrix = [[0 for i in range(mosaicDim)] for i in range(mosaicDim)]
 # Open Image :
 imFormat =ImageFormatter.ImageFormatter("troll512x512.png")
 # ?
-color = imFormat.process_image()
+color = imFormat.process_image(imageDim)
 # ?
 image = imFormat.get_image()
 # ?
