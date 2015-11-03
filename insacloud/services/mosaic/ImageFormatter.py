@@ -15,9 +15,9 @@ class ImageFormatter:
             logging.info("Unable to open image " + image_path)
             raise IOError
 
-    def process_image(self):
+    def process_image(self, side):
         self.__crop_image()
-        self.__resize_image(64,64)
+        self.__resize_image(side,side)
         self.__black_and_white()
         return self.__get_main_color_black()
 
@@ -37,9 +37,9 @@ class ImageFormatter:
         im_width, im_height = self.image.size
 
         if im_width > im_height:
-            self.image = self.image.crop(((im_width/2-im_height/2), 0, (im_width/2+im_height/2), im_height))
+            self.image = self.image.crop((int(im_width/2-im_height/2), 0, int(im_width/2+im_height/2), int(im_height)))
         elif im_width < im_height:
-            self.image = self.image.crop(((im_height/2-im_width/2), 0, (im_height/2+im_width/2), im_width))
+            self.image = self.image.crop((int(im_height/2-im_width/2), 0, int(im_height/2+im_width/2), int(im_width)))
         else:
             pass
 
@@ -90,4 +90,4 @@ class ImageFormatter:
         user can zoom in on the smartphone and get the bigger image.
     """
     def __resize_image(self, w, h):
-        self.image = self.image.resize((w,h), Image.ANTIALIAS)
+        self.image = self.image.resize((int(w),int(h)), Image.ANTIALIAS)

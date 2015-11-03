@@ -31,3 +31,4 @@ insacloud_django_static_url: http://localhost:8080/static/
 insacloud_django_superuser_name: admin
 insacloud_django_superuser_password: insacloud
 insacloud_django_upload_path: "{{insacloud_virtualenv_path}}/{{insacloud_appname}}/media/"
+insacloud_django_picture_side: 512
