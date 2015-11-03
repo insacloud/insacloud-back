@@ -72,6 +72,23 @@ class ImageFormatter:
 
         return float(r) / float(count), float(g) / float(count), float(b) / float(count)
 
+
+    def __get_main_color_black(self):
+        # For now, it uses the function from base-project
+        b = 0
+        count = 0
+        pix = self.image.load()
+        im_max_x, im_max_y = self.image.size
+
+        for x in range(0, im_max_x):
+            for y in range(0, im_max_y):
+                temp_b = pix[x,y]
+                b += temp_b
+                count += 1
+
+        return float(b) / float(count)
+
+
     """
         resize input image so that it can be saved and then directly used in a mosaic if needed.
         Recommanded size 5x5px (not sure though) -> warning: we must also keep a good quality image, so that
