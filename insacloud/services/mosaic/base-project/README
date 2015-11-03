@@ -1,0 +1,14 @@
+This is a python script found here : https://github.com/sameeptandon/python-mosaic
+It does not do exactly what will need and will probably be subject to modification. 
+
+(Note that the copyright at the beginning of mosaic.py mustn't be altered)
+
+# Sample command : 
+
+python mosaic.py -i input_image.jpg -s my_directory_of_images_to_make_mosaic_out_of -r 10 10 -t 20 20 -v -a
+
+This will make a mosaic out of input_image.jpg using the images in my_directory_of_images_to_make_mosaic_out_of.
+It will analyze 10x10 boxes in input_image.jpg for the closest match in the directory of images. In the mosaic,
+it will save 20x20 image thumbnails. Thus, the output image will be bigger than the input image (by 2x in each dimension).
+
+

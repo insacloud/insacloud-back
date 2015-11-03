@@ -10,7 +10,6 @@ class SqliteManager:
     The database will be filled with entries like :
         "rgb color in hex format" : "directory where a picture with this average color can be found"
     eg. "33CC66" : "folder1"
-
     For now, the color code will be only one byte ("80"), from "00" to "FF"
     as we'll work with black&white pictures only
     """
@@ -64,7 +63,9 @@ class SqliteManager:
         self.connection.commit()
         logging.info('New picture inserted (color = ' + row[0] + ', path = ' + row[1] + ')')
 
+
+
+
 class PostGreManager:
     # Later ?
     pass
-Architecture transformation : entry point is now MosaicManager and it relies on two classes : ImageFormatter from ImageFormatter.py and SqliteManager from DatabaseManager.py
