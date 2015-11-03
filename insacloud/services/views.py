@@ -6,6 +6,11 @@ from services.serializers import UserSerializer, GroupSerializer, EventSerialize
 from services.geolocalisation import get_bounding_box
 from services.mosaic.ImageFormatter import ImageFormatter
 from django.conf import settings
+from rest_framework.decorators import detail_route
+
+from django.http import HttpResponse
+import os
+
 
 class UserViewSet(viewsets.ModelViewSet):
   queryset = User.objects.all().order_by('-date_joined')
@@ -19,6 +24,17 @@ class EventViewSet(viewsets.ModelViewSet):
   queryset = Event.objects.all()
   serializer_class = EventSerializer
 
+  @detail_route()
+  def get_mosaic(self, request, pk):
+    # we could return image directly
+    evt = Event.objects.get(pk=pk)
+    return HttpResponse(settings.UPLOAD_URL+os.path.basename(evt.poster.name))
+
+  @detail_route()
+  def generate_mosaic(self, request, pk):
+    # TODO
+
+
   def perform_create(self, serializer):
     import os
     event = serializer.save()
@@ -28,6 +44,7 @@ class EventViewSet(viewsets.ModelViewSet):
     os.rename(buff, event.poster.name)
 
     imf = ImageFormatter(event.poster.name)
+    imf.process_image(settings.IMAGE_SIDE)
     imf.save_image(event.poster.name)
 
     event.save()
@@ -50,9 +67,8 @@ class PictureViewSet(viewsets.ModelViewSet):
     picture = serializer.save()
     buff = picture.image.name
     fn, ext = os.path.splitext(picture.image.name)
-    picture.image.name = settings.UPLOAD_PATH+"{eventId}_{id}{ext}".format(id=picture.id, eventId=picture.event.id, ext=ext)
+    picture.image.name = settings.UPLOAD_PATH+"picture_{eventId}_{id}{ext}".format(id=picture.id, eventId=picture.event.id, ext=ext)
     os.rename(buff, picture.image.name)
-    resizeImage(picture.image.name)
 
     imf = ImageFormatter(picture.image.name)
     picture.hue = imf.process_image(settings.IMAGE_SIDE)

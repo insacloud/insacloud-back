@@ -27,8 +27,10 @@ nginx_listen_port: 80
 
 insacloud_path_repo: /vagrant
 insacloud_django_static_path: /tmp/static
-insacloud_django_static_url: http://localhost:8080/static/
+insacloud_django_url: http://localhost:8080/
+insacloud_django_static_url: "{{insacloud_django_url}}static/"
 insacloud_django_superuser_name: admin
 insacloud_django_superuser_password: insacloud
 insacloud_django_upload_path: "{{insacloud_virtualenv_path}}/{{insacloud_appname}}/media/"
+insacloud_django_upload_url: "{{insacloud_django_url}}media/"
 insacloud_django_picture_side: 512
