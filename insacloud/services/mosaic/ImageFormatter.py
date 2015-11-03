@@ -90,4 +90,4 @@ class ImageFormatter:
         user can zoom in on the smartphone and get the bigger image.
     """
     def __resize_image(self, w, h):
-        self.image.resize((w,h), Image.ANTIALIAS)
+        self.image = self.image.resize((w,h), Image.ANTIALIAS)
