@@ -16,7 +16,7 @@ class ImageFormatter:
             raise IOError
 
     def process_image(self):
-        self.__crop_image(self.image)
+        self.__crop_image()
         self.__resize_image(64,64)
         self.__black_and_white()
         return self.__get_main_color_black()
@@ -37,9 +37,9 @@ class ImageFormatter:
         im_width, im_height = self.image.size
 
         if im_width > im_height:
-            self.image = self.image.crop((im_width/2-im_height/2), 0, (im_width/2+im_height/2), im_height)
+            self.image = self.image.crop(((im_width/2-im_height/2), 0, (im_width/2+im_height/2), im_height))
         elif im_width < im_height:
-            self.image = self.image.crop((im_height/2-im_width/2), 0, (im_height/2+im_width/2), im_width)
+            self.image = self.image.crop(((im_height/2-im_width/2), 0, (im_height/2+im_width/2), im_width))
         else:
             pass
 
