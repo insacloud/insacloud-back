@@ -2,11 +2,8 @@
 import sys
 import urllib2
 import os
-sys.path.append("..")
-sys.path.append("config")
-sys.path.append("services")
-
 os.environ['DJANGO_SETTINGS_MODULE'] = "insacloud.settings"
+sys.path.append("..")
 from services.models import Event
 from django.core.files import File
 
