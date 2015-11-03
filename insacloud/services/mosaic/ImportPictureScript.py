@@ -1,6 +1,7 @@
 import ImageFormatter
 from PIL import Image
 import math
+import random
 
 # Algo var
 imageDim = 512 # all images will have imageDim*imageDim pixels
@@ -15,16 +16,32 @@ mosaicMatrix = [[0 for i in range(mosaicDim)] for i in range(mosaicDim)]
 # Open Image :
 imFormat =ImageFormatter.ImageFormatter("troll512x512.png")
 # ?
-color = imFormat.process_image()
+color = imFormat.process_image(imageDim)
 # ?
 image = imFormat.get_image()
 # ?
 pixel = image.load()
 
+# TODO - Build this dictionnary
+hueMap = {"1":[image]}
+
+def find_closest_available_hue(targetHue, hueMap):
+    if(str(targetHue) in hueMap):
+        return hueMap[str(targetHue)][random.randint(0,len(hueMap[str(targetHue)])-1)]
+    min=256
+    k = None
+    for key in hueMap:
+        hue = int(key)
+        if(abs(hue - targetHue) < min):
+            min = abs(hue - targetHue)
+            k = key
+    return hueMap[k][random.randint(0,len(hueMap[k])-1)]
+
 # feed mosaicMatrix with mosaicDim*mosaicDim images
 for x in range(mosaicDim):
     for y in range(mosaicDim):
-#=========> TODO : feed with the goods images
+        hue = pixel[x,y]
+        find_closest_available_hue(hue, hueMap)
         mosaicMatrix[x][y] = image
 
 # generate tiles and mosaic
