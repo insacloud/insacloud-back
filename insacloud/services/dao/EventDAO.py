@@ -3,6 +3,7 @@ import sys
 import urllib2
 import os
 <<<<<<< HEAD
+<<<<<<< HEAD
 os.environ['DJANGO_SETTINGS_MODULE'] = "insacloud.settings"
 sys.path.append("..")
 from services.models import Event
@@ -16,7 +17,10 @@ sys.path.append("services")
 #from models import Event
 >>>>>>> Reorganisation
 =======
+=======
+>>>>>>> Removent FileDao unused -> integrated in EventDao
 os.environ['DJANGO_SETTINGS_MODULE'] = "insacloud.settings"
+sys.path.append("..")
 from services.models import Event
 from django.core.files import File
 >>>>>>> Import is fonctionnal: adding to the database works
