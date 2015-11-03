@@ -4,7 +4,6 @@ import sys
 import dao
 from dao import EventfulDAO
 from dao import EventDAO
-from dao import FileDAO
 import config
 from config.import_config import config_ImportEventDataService
 
