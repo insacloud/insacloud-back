@@ -32,8 +32,15 @@ class EventViewSet(viewsets.ModelViewSet):
 
   @detail_route()
   def generate_mosaic(self, request, pk):
+    from services.mosaic.GenerateMosaic import GenerateMosaic
     # TODO
+    evt = Event.objects.get(pk=pk)
+    pictures = Picture.objects.filter(event=pk)
+    gn = GenerateMosaic(evt.poster, pictures)
+    mosaic = gn.generate()
+    mosaic.save(settings.UPLOAD_PATH+"mosaic.jpg")
 
+    return HttpResponse("OK")
 
   def perform_create(self, serializer):
     import os
