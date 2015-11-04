@@ -18,8 +18,8 @@ def upload_path_handler(instance, filename):
 
 # Create your models here.
 class Event(models.Model):
-  id_source = models.IntegerField(null=True)
-  source = models.CharField(max_length=2, null=True)
+  id_source = models.CharField(max_length=255, null=True)
+  source = models.CharField(max_length=255, null=True)
   date_start = models.DateTimeField(null=True)
   date_end = models.DateTimeField(null=True)
   category = models.TextField()

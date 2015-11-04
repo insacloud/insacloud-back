@@ -7,6 +7,10 @@ This is THE BACK
 restful
 - http://localhost:8080/api/  
 
+custom  
+- ``/api/events/{{id}}/get_mosaic``: get mosaic **url**
+- ``/api/events/{{id}}/generate_mosaic``: generate mosaic for an event (not should be called: testing)
+
 filters
 - ``/api/events/``
   - ``latitude``

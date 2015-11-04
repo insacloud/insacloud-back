@@ -10,7 +10,6 @@ class SqliteManager:
     The database will be filled with entries like :
         "rgb color in hex format" : "directory where a picture with this average color can be found"
     eg. "33CC66" : "folder1"
-
     For now, the color code will be only one byte ("80"), from "00" to "FF"
     as we'll work with black&white pictures only
     """
