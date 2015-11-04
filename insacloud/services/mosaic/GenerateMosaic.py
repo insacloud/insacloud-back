@@ -2,16 +2,10 @@ from services.mosaic.ImageFormatter import ImageFormatter
 from PIL import Image
 import math
 import random
+from services.models import Mosaic, Event
 
 class GenerateMosaic:
-################################################################################
-#################################################################### fonctions #
-################################################################################
-
   def __init__(self, poster, pictures):
-################################################################################
-#################################################################### variables #
-################################################################################
     # Algo var
     self.imageDim = 512 # all images will have imageDim*imageDim pixels
     self.mosaicDim = 64 # mosaic will have mosaicDim*mosaicDim images
@@ -43,7 +37,7 @@ class GenerateMosaic:
             k = key
     return hueMap[k][random.randint(0,len(hueMap[k])-1)]
 
-  def generate(self):
+  def generate(self, event_id, imagesPath):
     # feed mosaicMatrix with mosaicDim*mosaicDim images
     ratio = self.imageDim/self.mosaicDim
     for x in range(self.mosaicDim):
@@ -70,10 +64,24 @@ class GenerateMosaic:
             # build mosaic with merging tiles
             self.mosaic.paste(tile, ((i%self.nbTilesPerDim)*self.imageDim, (j%self.nbTilesPerDim)*self.imageDim,((i%self.nbTilesPerDim)+1)*self.imageDim, ((j%self.nbTilesPerDim)+1)*self.imageDim))
             # export mosaic image
-            tile.save("tile-"+str(i)+"-"+str(j)+".jpg", "JPEG")
+            path = imagesPath+"tile_"+str(event_id)+"-"+str(i)+"-"+str(j)+".jpg"
+            tile.save(path, "JPEG")
+
+            mosaic = Mosaic()
+            mosaic.event = Event.objects.get(pk=event_id)
+            mosaic.level = 1
+            mosaic.row = i
+            mosaic.column = j
+            mosaic.image = path
+            mosaic.save()
 
     # resize mosaic image
     self.mosaic = self.mosaic.resize((self.imageDim,self.imageDim), Image.ANTIALIAS)
     # export mosaic image
-    self.mosaic.save("mosaic.jpg", "JPEG")
-    return self.mosaic
+    path = imagesPath+"mosaic_"+str(event_id)+".jpg"
+    self.mosaic.save(path, "JPEG")
+    mosaic = Mosaic()
+    mosaic.level = 0
+    mosaic.event = Event.objects.get(pk=event_id)
+    mosaic.image = path
+    mosaic.save()

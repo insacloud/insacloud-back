@@ -34,3 +34,4 @@ insacloud_django_superuser_password: insacloud
 insacloud_django_upload_path: "{{insacloud_virtualenv_path}}/{{insacloud_appname}}/media/"
 insacloud_django_upload_url: "{{insacloud_django_url}}media/"
 insacloud_django_picture_side: 512
+insacloud_django_generate_mosaic_step: 5

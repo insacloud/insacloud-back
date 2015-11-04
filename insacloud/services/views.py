@@ -1,16 +1,23 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
-from services.models import Event, Picture, Mosaic, Mosaic_cell
-from services.serializers import UserSerializer, GroupSerializer, EventSerializer, PictureSerializer, MosaicSerializer, Mosaic_cellSerializer
+from services.models import Event, Picture, Mosaic
+from services.serializers import UserSerializer, GroupSerializer, EventSerializer, PictureSerializer, MosaicSerializer
 from services.geolocalisation import get_bounding_box
 from services.mosaic.ImageFormatter import ImageFormatter
 from django.conf import settings
-from rest_framework.decorators import detail_route
+from rest_framework.decorators import detail_route, list_route
 
 from django.http import HttpResponse
 import os
 
+def generateMosaic(enventId):
+  from services.mosaic.GenerateMosaic import GenerateMosaic
+  evt = Event.objects.get(pk=enventId)
+  pictures = Picture.objects.filter(event=enventId)
+  gn = GenerateMosaic(evt.poster, pictures)
+  Mosaic.objects.filter(event=enventId).delete()
+  mosaics = gn.generate(enventId, settings.UPLOAD_PATH)
 
 class UserViewSet(viewsets.ModelViewSet):
   queryset = User.objects.all().order_by('-date_joined')
@@ -25,20 +32,8 @@ class EventViewSet(viewsets.ModelViewSet):
   serializer_class = EventSerializer
 
   @detail_route()
-  def get_mosaic(self, request, pk):
-    # we could return image directly
-    evt = Event.objects.get(pk=pk)
-    return HttpResponse(settings.UPLOAD_URL+os.path.basename(evt.poster.name))
-
-  @detail_route()
   def generate_mosaic(self, request, pk):
-    from services.mosaic.GenerateMosaic import GenerateMosaic
-    # TODO
-    evt = Event.objects.get(pk=pk)
-    pictures = Picture.objects.filter(event=pk)
-    gn = GenerateMosaic(evt.poster, pictures)
-    mosaic = gn.generate()
-    mosaic.save(settings.UPLOAD_PATH+"mosaic.jpg")
+    generateMosaic(pk)
 
     return HttpResponse("OK")
 
@@ -83,10 +78,25 @@ class PictureViewSet(viewsets.ModelViewSet):
 
     picture.save()
 
+    if Picture.objects.filter(event=picture.event.id).count() % int(settings.GENERATE_MOSAIC_STEP) == 0:
+      generateMosaic(picture.event.id)
+
 class MosaicViewSet(viewsets.ModelViewSet):
   queryset = Mosaic.objects.all()
   serializer_class = MosaicSerializer
 
-class Mosaic_cellViewSet(viewsets.ModelViewSet):
-  queryset = Mosaic_cell.objects.all()
-  serializer_class = Mosaic_cellSerializer
+  @list_route()
+  def get_image(self, request, pk=None):
+    import os
+    event = int(self.request.query_params.get('event', -1))
+    level = int(self.request.query_params.get('level', -1))
+    row = int(self.request.query_params.get('row', -1))
+    column = int(self.request.query_params.get('column', -1))
+    if event != -1 and level != -1:
+      if row != -1 and column != -1:
+        mosaic = Mosaic.objects.get(event=event, level=level, row=row, column=column)
+      else:
+        mosaic = Mosaic.objects.get(event=event, level=level)
+      return HttpResponse(settings.UPLOAD_URL + os.path.basename(mosaic.image.name))
+    else:
+      return HttpResponse("Error: missings parameters")

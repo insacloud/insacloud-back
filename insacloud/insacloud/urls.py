@@ -23,8 +23,7 @@ router.register(r'users', views.UserViewSet)
 router.register(r'groups', views.GroupViewSet)
 router.register(r'events', views.EventViewSet)
 router.register(r'pictures', views.PictureViewSet)
-router.register(r'mosaic', views.MosaicViewSet)
-router.register(r'mosaic_cell', views.Mosaic_cellViewSet)
+router.register(r'mosaics', views.MosaicViewSet)
 
 urlpatterns = [
     url(r'^api/', include(router.urls)),

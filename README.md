@@ -8,8 +8,12 @@ restful
 - http://localhost:8080/api/  
 
 custom  
-- ``/api/events/{{id}}/get_mosaic``: get mosaic **url**
 - ``/api/events/{{id}}/generate_mosaic``: generate mosaic for an event (not should be called: testing)
+- ``/api/mosaics/get_image``: get mosaic or tile (return **url**)
+  - ``event``: event id (**int, required**)
+  - ``level``: 0 for all mosaic, > 0 for tiles (**int, required**)
+  - ``row``: tile at row (int, only if level > 0)
+  - ``column``: tile at column (int, only if level > 0)
 
 filters
 - ``/api/events/``
@@ -17,6 +21,7 @@ filters
   - ``longitude``
   - ``radius`` (km)
 
+mosaics are auto-generated every time GENERATE_MOSAIC_STEP images has been added
 
 ## Useful stuff
 ---

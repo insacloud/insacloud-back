@@ -32,15 +32,13 @@ class Event(models.Model):
 
 class Picture(models.Model):
   event = models.ForeignKey(Event)
-  hue = models.IntegerField()
+  hue = models.IntegerField(default=-1)
   image=models.ImageField(upload_to=upload_path_handler, null=True)
   # other img properties
 
 class Mosaic(models.Model):
   event = models.ForeignKey(Event)
-
-class Mosaic_cell(models.Model):
-  mosaic = models.ForeignKey(Mosaic)
-  picture = models.ForeignKey(Picture)
-  row = models.IntegerField()
-  column = models.IntegerField()
+  level = models.IntegerField()
+  row = models.IntegerField(null=True)
+  column = models.IntegerField(null=True)
+  image = models.ImageField(upload_to=settings.UPLOAD_PATH)
