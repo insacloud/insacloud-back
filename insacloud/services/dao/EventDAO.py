@@ -38,17 +38,6 @@ def TryAndAddNewEvent(id_source_new,
 			
 		file = '%s/%s%s' % (path, id_source_new, file_extension)
 		
-		'''response = urllib.request.urlopen(poster_url)
-
-		#open the file for writing
-		fh = open(file, "w")
-
-		# read from request while writing to file
-		fh.write(str(response.read())
-		fh.close()
-		'''
-		urllib.request.urlretrieve(poster_url, file)
-		
 		event = Event()
 		
 		event.id_source = id_source_new
@@ -62,12 +51,15 @@ def TryAndAddNewEvent(id_source_new,
 		event.longitude = longitude
 		event.latitude = latitude
 		
-		with open(file, 'r') as f:
-			image_file = File(f) 
-			event.poster.save('%s%s' % (id_source_new, file_extension), image_file, True)
 		
+		from django.core.files import File
+		from django.core.files.temp import NamedTemporaryFile
 
-		os.remove(file)
+		img_temp = NamedTemporaryFile()
+		img_temp.write(urllib.request.urlopen(poster_url).read())
+		img_temp.flush()
+
+		event.poster.save('%s%s' % (id_source_new, file_extension), File(img_temp))
 		
 		print ("\n\n\nOK--- Event Added to database\n\n\n")
 		
