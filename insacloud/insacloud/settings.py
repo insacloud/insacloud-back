@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+UPLOAD_PATH="."
 # Application definition
 
 INSTALLED_APPS = (
