@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import sys
-import urllib
+import urllib.request
 import os
 os.environ['DJANGO_SETTINGS_MODULE'] = "insacloud.settings"
 sys.path.append("..")
@@ -38,15 +38,16 @@ def TryAndAddNewEvent(id_source_new,
 			
 		file = '%s/%s%s' % (path, id_source_new, file_extension)
 		
-		response = urllib2.urlopen(poster_url)
+		'''response = urllib.request.urlopen(poster_url)
 
 		#open the file for writing
 		fh = open(file, "w")
 
 		# read from request while writing to file
-		fh.write(response.read())
+		fh.write(str(response.read())
 		fh.close()
-		
+		'''
+		urllib.request.urlretrieve(poster_url, file)
 		
 		event = Event()
 		
