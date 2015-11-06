@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import sys
-import urllib2
+import urllib
 import os
 os.environ['DJANGO_SETTINGS_MODULE'] = "insacloud.settings"
 sys.path.append("..")
@@ -68,8 +68,8 @@ def TryAndAddNewEvent(id_source_new,
 
 		os.remove(file)
 		
-		print "\n\n\nOK--- Event Added to database\n\n\n"
+		print ("\n\n\nOK--- Event Added to database\n\n\n")
 		
 
 	else:
-		print "\n\n\nWARNING--- Event already exists (IGNORED)\n\n\n"
+		print ("\n\n\nWARNING--- Event already exists (IGNORED)\n\n\n")
