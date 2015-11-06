@@ -36,12 +36,15 @@ class ImageFormatter:
     def __crop_image(self):
         im_width, im_height = self.image.size
 
+        hWidth = im_width / 2
+        hHeight = im_height / 2
+
+        minSide = im_width
+
         if im_width > im_height:
-            self.image = self.image.crop((int(im_width/2-im_height/2), 0, int(im_width/2+im_height/2), int(im_height)))
-        elif im_width < im_height:
-            self.image = self.image.crop((int(im_height/2-im_width/2), 0, int(im_height/2+im_width/2), int(im_width)))
-        else:
-            pass
+            minSide = im_height
+        minSide = minSide / 2
+        self.image = self.image.crop((int(hWidth - minSide), int(hHeight - minSide), int(hWidth + minSide), int(hHeight + minSide)))
 
     # I guess this will be used only at the beginning, then we should switch to colours.
     def __black_and_white(self):
