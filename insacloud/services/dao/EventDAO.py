@@ -2,7 +2,11 @@
 import sys
 import urllib.request
 import os
+<<<<<<< HEAD
 os.environ['DJANGO_SETTINGS_MODULE'] = "insacloud.local_settings"
+=======
+os.environ['DJANGO_SETTINGS_MODULE'] = "insacloud.settings"
+>>>>>>> a91585c9f60cf24d293d7228461e5b6b34cbdbcb
 sys.path.append("..")
 from services.models import Event
 from django.core.files import File
