@@ -16,7 +16,7 @@ class GroupSerializer(serializers.ModelSerializer):
 class EventSerializer(serializers.ModelSerializer):
   class Meta:
     model = Event
-    fields = ('url', 'id_source', 'source', 'date_start', 'date_end', 'title', 'location', 'venue', 'latitude', 'longitude', 'poster')
+    fields = ('url', 'id_source', 'source', 'date_start', 'date_end', 'category', 'title', 'location', 'venue', 'latitude', 'longitude', 'poster')
 
 class PictureSerializer(serializers.ModelSerializer):
   class Meta:
