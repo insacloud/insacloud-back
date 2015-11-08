@@ -10,6 +10,7 @@ from rest_framework.decorators import detail_route, list_route
 
 from django.http import HttpResponse
 import os
+from rest_framework import serializers
 
 def generateMosaic(enventId):
   from services.mosaic.GenerateMosaic import GenerateMosaic
@@ -38,18 +39,19 @@ class EventViewSet(viewsets.ModelViewSet):
     return HttpResponse("OK")
 
   def perform_create(self, serializer):
-    import os
-    event = serializer.save()
-    buff = event.poster.name
-    fn, ext = os.path.splitext(event.poster.name)
-    event.poster.name = settings.UPLOAD_PATH+"poster_{id}{ext}".format(id=event.id, ext=ext)
-    os.rename(buff, event.poster.name)
+    if serializer.is_valid():
+      buff = serializer.validated_data['poster'].name
+      fn, ext = os.path.splitext(buff)
+      event = serializer.save()
+      buff = event.poster.name
+      event.poster.name = settings.UPLOAD_PATH+"poster_{id}{ext}".format(id=event.id, ext=ext)
+      os.rename(buff, event.poster.name)
 
-    imf = ImageFormatter(event.poster.name)
-    imf.process_image(settings.IMAGE_SIDE)
-    imf.save_image(event.poster.name)
+      imf = ImageFormatter(event.poster.name)
+      imf.process_image(settings.IMAGE_SIDE)
+      imf.save_image(event.poster.name)
 
-    event.save()
+      event.save()
 
   def get_queryset(self):
     latitude = float(self.request.query_params.get('latitude', -1))
@@ -65,21 +67,21 @@ class PictureViewSet(viewsets.ModelViewSet):
   serializer_class = PictureSerializer
 
   def perform_create(self, serializer):
-    import os
-    picture = serializer.save()
-    buff = picture.image.name
-    fn, ext = os.path.splitext(picture.image.name)
-    picture.image.name = settings.UPLOAD_PATH+"picture_{eventId}_{id}{ext}".format(id=picture.id, eventId=picture.event.id, ext=ext)
-    os.rename(buff, picture.image.name)
+    if serializer.is_valid():
+      picture = serializer.save()
+      buff = picture.image.name
+      fn, ext = os.path.splitext(picture.image.name)
+      picture.image.name = settings.UPLOAD_PATH+"picture_{eventId}_{id}{ext}".format(id=picture.id, eventId=picture.event.id, ext=ext)
+      os.rename(buff, picture.image.name)
 
-    imf = ImageFormatter(picture.image.name)
-    picture.hue = imf.process_image(settings.IMAGE_SIDE)
-    imf.save_image(picture.image.name)
+      imf = ImageFormatter(picture.image.name)
+      picture.hue = imf.process_image(settings.IMAGE_SIDE)
+      imf.save_image(picture.image.name)
 
-    picture.save()
+      picture.save()
 
-    if Picture.objects.filter(event=picture.event.id).count() % int(settings.GENERATE_MOSAIC_STEP) == 0:
-      generateMosaic(picture.event.id)
+      if Picture.objects.filter(event=picture.event.id).count() % int(settings.GENERATE_MOSAIC_STEP) == 0:
+        generateMosaic(picture.event.id)
 
 class MosaicViewSet(viewsets.ModelViewSet):
   queryset = Mosaic.objects.all()

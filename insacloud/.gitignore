@@ -14,4 +14,3 @@ parts
 media
 tmp
 .DS_Store
-.cache

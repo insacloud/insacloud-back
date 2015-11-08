@@ -1,44 +1,55 @@
 from django.db import models
 from django.conf import settings
-
-# import uuid
-# def get_upload_to(instance, filename):
-#     instance.uuid = uuid.uuid4().hex
-#     return settings.UPLOAD_PATH+'%s/%s' % (instance.uuid, filename)
-
-# import os
-# from django.db import models
-# def get_upload_to(instance, filename):
-#   return os.path.join('photos', str(instance.id), filename)
+from django.core.exceptions import ValidationError
+from django.dispatch import receiver
+import os
 
 def upload_path_handler(instance, filename):
   import os.path
   fn, ext = os.path.splitext(filename)
   return settings.UPLOAD_PATH+"{id}{ext}".format(id=instance.event.id, ext=ext)
 
+def validate_image_extension(value):
+    import os
+    ext = os.path.splitext(value.name)[1]  # [0] returns path+filename
+    valid_extensions = ['.jpeg', '.jpg', '.png',]
+    if not ext in valid_extensions:
+        raise ValidationError('Unsupported file extension.')
+
 # Create your models here.
 class Event(models.Model):
-  id_source = models.CharField(max_length=255, null=True)
+  id_source = models.CharField(max_length=255, unique=True)
   source = models.CharField(max_length=255, null=True)
   date_start = models.DateTimeField(null=True)
   date_end = models.DateTimeField(null=True)
-  category = models.TextField()
+  category = models.TextField(null=True)
   title = models.TextField()
-  location = models.TextField()
-  venue = models.TextField()
+  location = models.TextField(null=True)
+  venue = models.TextField(null=True)
   latitude = models.FloatField()
   longitude = models.FloatField()
-  poster = models.ImageField(upload_to=settings.UPLOAD_PATH)
+  poster = models.ImageField(upload_to=settings.UPLOAD_PATH, validators=[validate_image_extension])
+
+@receiver(models.signals.post_delete, sender=Event)
+def event_auto_delete_files(sender, instance, **kwargs):
+    if instance.poster:
+        if os.path.isfile(instance.poster.path):
+            os.remove(instance.poster.path)
 
 class Picture(models.Model):
   event = models.ForeignKey(Event)
   hue = models.IntegerField(default=-1)
   image=models.ImageField(upload_to=upload_path_handler, null=True)
-  # other img properties
+
+@receiver(models.signals.post_delete, sender=Picture)
+def picture_auto_delete_files(sender, instance, **kwargs):
+    if instance.image:
+        if os.path.isfile(instance.image.path):
+            os.remove(instance.image.path)
 
 class Mosaic(models.Model):
   event = models.ForeignKey(Event)
   level = models.IntegerField()
   row = models.IntegerField(null=True)
   column = models.IntegerField(null=True)
-  image = models.ImageField(upload_to=settings.UPLOAD_PATH)
+  image = models.ImageField(upload_to=settings.UPLOAD_PATH, validators=[validate_image_extension])
