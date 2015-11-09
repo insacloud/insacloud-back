@@ -18,7 +18,7 @@ def generateMosaic(enventId):
   pictures = Picture.objects.filter(event=enventId)
   gn = GenerateMosaic(evt.poster, pictures)
   Mosaic.objects.filter(event=enventId).delete()
-  mosaics = gn.generate(enventId, settings.UPLOAD_PATH)
+  mosaics = gn.generate(enventId, settings.MEDIA_ROOT)
 
 class UserViewSet(viewsets.ModelViewSet):
   queryset = User.objects.all().order_by('-date_joined')
@@ -40,16 +40,15 @@ class EventViewSet(viewsets.ModelViewSet):
 
   def perform_create(self, serializer):
     if serializer.is_valid():
-      buff = serializer.validated_data['poster'].name
-      fn, ext = os.path.splitext(buff)
       event = serializer.save()
-      buff = event.poster.name
-      event.poster.name = settings.UPLOAD_PATH+"poster_{id}{ext}".format(id=event.id, ext=ext)
-      os.rename(buff, event.poster.name)
+      buff = event.poster.path
+      fn, ext = os.path.splitext(buff)
+      event.poster.name = "poster_{id}{ext}".format(id=event.id, ext=ext)
+      os.rename(buff, settings.MEDIA_ROOT+event.poster.name)
 
-      imf = ImageFormatter(event.poster.name)
+      imf = ImageFormatter(event.poster.path)
       imf.process_image(settings.IMAGE_SIDE)
-      imf.save_image(event.poster.name)
+      imf.save_image(event.poster.path)
 
       event.save()
 
@@ -69,14 +68,14 @@ class PictureViewSet(viewsets.ModelViewSet):
   def perform_create(self, serializer):
     if serializer.is_valid():
       picture = serializer.save()
-      buff = picture.image.name
-      fn, ext = os.path.splitext(picture.image.name)
-      picture.image.name = settings.UPLOAD_PATH+"picture_{eventId}_{id}{ext}".format(id=picture.id, eventId=picture.event.id, ext=ext)
-      os.rename(buff, picture.image.name)
+      buff = picture.image.path
+      fn, ext = os.path.splitext(picture.image.path)
+      picture.image.name = "picture_{eventId}_{id}{ext}".format(id=picture.id, eventId=picture.event.id, ext=ext)
+      os.rename(buff, settings.MEDIA_ROOT+picture.image.name)
 
-      imf = ImageFormatter(picture.image.name)
+      imf = ImageFormatter(picture.image.path)
       picture.hue = imf.process_image(settings.IMAGE_SIDE)
-      imf.save_image(picture.image.name)
+      imf.save_image(picture.image.path)
 
       picture.save()
 

@@ -17,7 +17,7 @@ server {
     error_log /var/log/nginx/{{insacloud_appname}}-error.log;
  
     location /static/ {
-        alias   {{insacloud_django_static_path}}/;
+        alias   {{insacloud_django_static_root}}{{insacloud_django_static_path}};
         
         # doublon
 #        auth_basic "Restricted";
@@ -25,7 +25,7 @@ server {
     }
 
     location /media/ {
-        alias   {{insacloud_django_upload_path}}/;
+        alias   {{insacloud_django_media_root}};
         
         # doublon
 #        auth_basic "Restricted";
@@ -71,6 +71,6 @@ server {
     # Error pages
     error_page 500 502 503 504 /500.html;
     location = /500.html {
-        root {{insacloud_django_static_path}}/;
+        root {{insacloud_django_static_root}}{{insacloud_django_static_path}};
     }
 }

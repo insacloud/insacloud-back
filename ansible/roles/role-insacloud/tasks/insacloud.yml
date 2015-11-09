@@ -35,7 +35,7 @@
   changed_when: False
 
 - name: Create upload folder
-  file: path={{insacloud_django_upload_path}} recurse=yes state=directory owner={{insacloud_user.name}} group={{insacloud_user.group}}
+  file: path={{insacloud_django_media_root}} recurse=yes state=directory owner={{insacloud_user.name}} group={{insacloud_user.group}}
 
 - name: Run the Django syncdb command
   django_manage:

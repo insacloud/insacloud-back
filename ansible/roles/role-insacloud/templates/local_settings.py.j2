@@ -21,13 +21,13 @@ CACHES = {
 }
 
 # to variabilize
-STATIC_ROOT = '{{insacloud_django_static_path}}'
+STATIC_ROOT = '{{insacloud_django_static_root}}{{insacloud_django_static_path}}'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 # persitance in db => 2 redis or keep that
 SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
-STATIC_URL = '{{insacloud_django_static_url}}'
-UPLOAD_PATH = '{{insacloud_django_upload_path}}'
-UPLOAD_URL = '{{insacloud_django_upload_url}}'
+STATIC_PATH = '{{insacloud_django_static_path}}'
+MEDIA_ROOT = '{{insacloud_django_media_root}}'
+MEDIA_URL = '{{insacloud_django_media_url}}'
 IMAGE_SIDE = '{{insacloud_django_picture_side}}'
 
 GENERATE_MOSAIC_STEP = '{{insacloud_django_generate_mosaic_step}}'

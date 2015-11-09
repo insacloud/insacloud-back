@@ -23,7 +23,7 @@ class GenerateMosaic:
     for picture in pictures:
       if picture.hue not in self.hueMap:
         self.hueMap[picture.hue]=[]
-      self.hueMap[picture.hue].append(Image.open(picture.image.name))
+      self.hueMap[picture.hue].append(Image.open(picture.image.path))
 
   def find_closest_available_hue(self, targetHue, hueMap):
     if(str(targetHue) in hueMap):
