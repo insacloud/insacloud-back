@@ -89,15 +89,35 @@ class MosaicViewSet(viewsets.ModelViewSet):
   @list_route()
   def get_image(self, request, pk=None):
     import os
+    from django.http import JsonResponse
+    from django.core import serializers
+    import json
     event = int(self.request.query_params.get('event', -1))
     level = int(self.request.query_params.get('level', -1))
     row = int(self.request.query_params.get('row', -1))
     column = int(self.request.query_params.get('column', -1))
-    if event != -1 and level != -1:
-      if row != -1 and column != -1:
-        mosaic = Mosaic.objects.get(event=event, level=level, row=row, column=column)
-      else:
-        mosaic = Mosaic.objects.get(event=event, level=level)
-      return HttpResponse(settings.UPLOAD_URL + os.path.basename(mosaic.image.name))
+    if event == -1 or not Event.objects.filter(pk=event):
+      return JsonResponse({'event':'not set or not exist.'})
+    elif level == -1:
+      return JsonResponse({'level':'not set.'})
     else:
-      return HttpResponse("Error: missings parameters")
+      try:
+        if row != -1 and column != -1:
+          mosaics = Mosaic.objects.filter(event=event, level=level, row=row, column=column)
+        else:
+          mosaics = Mosaic.objects.filter(event=event, level=level)
+        #return JsonResponse(serializers.serialize('json', mosaics))
+        data = ""
+        for mosaic in mosaics:
+          data += str(MosaicSerializer(mosaic).data) + ','
+        #return JsonResponse(data)
+        return JsonResponse(json.load(data))
+      except Mosaic.DoesNotExist:
+        raise APIException("Error.")
+
+      #   return HttpResponse(settings.UPLOAD_URL + os.path.basename(mosaic.image.name))
+      # else:
+      #   # raise ValidationError('Error: missings parameters.')
+      #   raise APIException("Error: missings parameters.")
+      # except Mosaic.DoesNotExist:
+      #   raise APIException("Error.")
