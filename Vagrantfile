@@ -7,7 +7,6 @@ Vagrant.configure(2) do |config|
   config.vm.network "forwarded_port", guest: 80, host: 8080
   config.vm.network "forwarded_port", guest: 8000, host: 8000
 
-  config.vm.provision "file", source: "~/.ssh/id_rsa", destination: "/home/vagrant/.ssh/id_rsa"
   config.vm.provision "shell", path: "provision.sh", args: "vagrant /vagrant"
   config.vm.provision "shell", inline: "deploy_vagrant"
 

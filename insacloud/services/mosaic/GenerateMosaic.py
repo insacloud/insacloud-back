@@ -16,7 +16,7 @@ class GenerateMosaic:
     mosaicMatrix = None
     # TODO - Build this dictionnary
     self.hueMap = {}
-    self.poster = Image.open(poster.name)
+    self.poster = Image.open(poster.path)
     self.pixel = self.poster.load()
     self.mosaicMatrix = [[0 for i in range(self.mosaicDim)] for i in range(self.mosaicDim)]
 
