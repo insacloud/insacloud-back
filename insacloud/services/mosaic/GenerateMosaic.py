@@ -64,7 +64,8 @@ class GenerateMosaic:
             # build mosaic with merging tiles
             self.mosaic.paste(tile, ((i%self.nbTilesPerDim)*self.imageDim, (j%self.nbTilesPerDim)*self.imageDim,((i%self.nbTilesPerDim)+1)*self.imageDim, ((j%self.nbTilesPerDim)+1)*self.imageDim))
             # export mosaic image
-            path = imagesPath+"tile_"+str(event_id)+"-"+str(i)+"-"+str(j)+".jpg"
+            name = "tile_"+str(event_id)+"-"+str(i)+"-"+str(j)+".jpg"
+            path = imagesPath+name
             tile.save(path, "JPEG")
 
             mosaic = Mosaic()
@@ -72,16 +73,17 @@ class GenerateMosaic:
             mosaic.level = 1
             mosaic.row = i
             mosaic.column = j
-            mosaic.image = path
+            mosaic.image.name = name
             mosaic.save()
 
     # resize mosaic image
     self.mosaic = self.mosaic.resize((self.imageDim,self.imageDim), Image.ANTIALIAS)
     # export mosaic image
-    path = imagesPath+"mosaic_"+str(event_id)+".jpg"
+    name = "mosaic_"+str(event_id)+".jpg"
+    path = imagesPath+name
     self.mosaic.save(path, "JPEG")
     mosaic = Mosaic()
     mosaic.level = 0
     mosaic.event = Event.objects.get(pk=event_id)
-    mosaic.image = path
+    mosaic.image.name = name
     mosaic.save()
