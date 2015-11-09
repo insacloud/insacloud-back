@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Event',
             fields=[
-                ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
+                ('id', models.AutoField(serialize=False, primary_key=True, auto_created=True, verbose_name='ID')),
                 ('id_source', models.CharField(max_length=255, unique=True)),
                 ('source', models.CharField(max_length=255, null=True)),
                 ('date_start', models.DateTimeField(null=True)),
@@ -31,7 +31,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Mosaic',
             fields=[
-                ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
+                ('id', models.AutoField(serialize=False, primary_key=True, auto_created=True, verbose_name='ID')),
                 ('level', models.IntegerField()),
                 ('row', models.IntegerField(null=True)),
                 ('column', models.IntegerField(null=True)),
@@ -42,9 +42,9 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Picture',
             fields=[
-                ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
+                ('id', models.AutoField(serialize=False, primary_key=True, auto_created=True, verbose_name='ID')),
                 ('hue', models.IntegerField(default=-1)),
-                ('image', models.ImageField(null=True, upload_to='/home/vagrant/insacloud/insacloud/media/')),
+                ('image', models.ImageField(upload_to='/home/vagrant/insacloud/insacloud/media/', null=True)),
                 ('event', models.ForeignKey(to='services.Event')),
             ],
         ),
