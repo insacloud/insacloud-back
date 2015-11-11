@@ -15,7 +15,8 @@ import requests
 urlInsaCloud = 'http://localhost/api/pictures/'
 apiInsacloud_user = input('Insacloud API user: ')
 apiInsacloud_pwd = getpass.getpass('Insacloud API password: ')
-eventId = input('Event id: ')
+eventIdFrom = int(input('Event id from (included [): '))
+eventIdTo = int(input('Event id to (not included [): '))
 picturesFolder = os.getcwd()+"/pictures-to-import/"
 
 print(picturesFolder)
@@ -26,9 +27,10 @@ print(picturesFolder)
 
 files = [ f for f in listdir(picturesFolder) if isfile(join(picturesFolder,f)) ]
 
-data = {"event": eventId}
-for f in files:
-  print(f)
-  image = {'image': (f, open(picturesFolder+f, 'rb'), 'image/jpg', {'Expires': '0'})}
-  myResponse = requests.post(urlInsaCloud, data=data, files=image, auth=(apiInsacloud_user, apiInsacloud_pwd), verify=True)
-  print(myResponse.text)
+for eventId in range(eventIdFrom, eventIdTo, 1):
+  data = {"event": eventId}
+  for f in files:
+    print(f)
+    image = {'image': (f, open(picturesFolder+f, 'rb'), 'image/jpg', {'Expires': '0'})}
+    myResponse = requests.post(urlInsaCloud, data=data, files=image, auth=(apiInsacloud_user, apiInsacloud_pwd), verify=True)
+    print(myResponse.text)

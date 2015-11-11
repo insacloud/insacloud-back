@@ -6,10 +6,12 @@ import os
 
 def validate_image_extension(value):
     import os
+    if not os.path.isfile(value.path):
+      raise ValidationError('File not correct or corrupted.')
     ext = os.path.splitext(value.name)[1]  # [0] returns path+filename
     valid_extensions = ['.jpeg', '.jpg', '.png',]
     if not ext in valid_extensions:
-        raise ValidationError('Unsupported file extension.')
+      raise ValidationError('Unsupported file extension.')
 
 # Create your models here.
 class Event(models.Model):

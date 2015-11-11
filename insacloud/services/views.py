@@ -24,28 +24,12 @@ class UserViewSet(viewsets.ModelViewSet):
   queryset = User.objects.all().order_by('-date_joined')
   serializer_class = UserSerializer
 
-  def perform_create(serializer):
+  def perform_create(self, serializer):
     if serializer.is_valid():
       user = serializer.save()
+      user.set_password(user.password)
+      user.is_staff = True # for demo
       user.save()
-
-  def perform_login(request):
-    username = request.POST['username']
-    password = request.POST['password']
-    user = authenticate(username=username, password=password)
-    if user is not None:
-      if user.is_active:
-        login(request, user)
-        return HttpResponse("OK")
-      else:
-        return HttpResponse("DISABLED")
-    else:
-      return HttpResponse("FAILED")
-
-  def perfom_logout(request):
-    logout(request)
-    return HttpResponse("OK")
-
 
 class GroupViewSet(viewsets.ModelViewSet):
   queryset = Group.objects.all()
