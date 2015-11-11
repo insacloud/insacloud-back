@@ -12,8 +12,9 @@ custom
 - ``/api/mosaics/get_image``: get mosaic or tile (return **url**)
   - ``event``: event id (**int, required**)
   - ``level``: 0 for all mosaic, > 0 for tiles (**int, required**)
-  - ``row``: tile at row (int, only if level > 0)
+  - ``row``: tile at row (int, only if level > 0) 
   - ``column``: tile at column (int, only if level > 0)
+0 <= row, column < 4^(level) (ex for level = 2, 0 <= row, colum < 4^2 = 16)
 
 filters
 - ``/api/events/``
