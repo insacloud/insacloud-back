@@ -50,6 +50,18 @@ class GenerateMosaic:
             hue = hueSum/(ratio*ratio)
             self.mosaicMatrix[x][y] = self.find_closest_available_hue(hue, self.hueMap)
 
+    for x in range(0, self.nbTilesPerDim, 1):
+        for y in range(0, self.nbTilesPerDim, 1):
+            mosaic = Mosaic()
+            mosaic.event = Event.objects.get(pk=event_id)
+            mosaic.level = 2
+            mosaic.row = x
+            mosaic.column = y
+            mosaic.image = path
+            mosaic.save()
+
+
+
     # generate tiles and mosaic
     # might be functionalized (huge nb of vars+)
     for i in range(0, self.nbTilesPerDim, 1): 
@@ -62,23 +74,23 @@ class GenerateMosaic:
                     n = int((l%self.tileDim) / self.nbTilesPerDim)  
                     q = k % self.nbTilesPerDim  
                     r = l % self.nbTilesPerDim 
-                    tileMatrix[m][n].paste(self.mosaicMatrix[k][l],(q*self.imageDim,r*self.imageDim,(q+1)*self.imageDim,(r+1)*self.imageDim))
+                    #tileMatrix[m][n].paste(self.mosaicMatrix[k][l],(q*self.imageDim,r*self.imageDim,(q+1)*self.imageDim,(r+1)*self.imageDim))
                     # build tile with merging images
                     tile.paste(self.mosaicMatrix[k][l], ((k%self.tileDim)*self.imageDim, (l%self.tileDim)*self.imageDim,((k%self.tileDim)+1)*self.imageDim, ((l%self.tileDim)+1)*self.imageDim))
             # resize tile image
             tile = tile.resize((self.imageDim,self.imageDim), Image.ANTIALIAS)
-            for x in range(0, self.nbTilesPerDim, 1):
-                for y in range(0, self.nbTilesPerDim, 1):
-                    tileMatrix[x][y].resize((self.imageDim,self.imageDim), Image.ANTIALIAS)
-                    path = imagesPath+"tile_zoom2_"+str(event_id)+"-"+str(x)+"-"+str(y)+".jpg"
-                    tileMatrix[x][y].save(path, "JPEG")
-                    mosaic = Mosaic()
-                    mosaic.event = Event.objects.get(pk=event_id)
-                    mosaic.level = 2
-                    mosaic.row = x
-                    mosaic.column = y
-                    mosaic.image = path
-                    mosaic.save()
+            # for x in range(0, self.nbTilesPerDim, 1):
+            #     for y in range(0, self.nbTilesPerDim, 1):
+            #         tileMatrix[x][y] = tileMatrix[x][y].resize((self.imageDim,self.imageDim), Image.ANTIALIAS)
+            #         path = imagesPath+"tile_"+ str(event_id)+"-"+str(i * self.nbTilesPerDim + x)+"-"+str(j * self.nbTilesPerDim + y)+".jpg"
+            #         tileMatrix[x][y].save(path, "JPEG")
+            #         mosaic = Mosaic()
+            #         mosaic.event = Event.objects.get(pk=event_id)
+            #         mosaic.level = 2
+            #         mosaic.row = i * self.nbTilesPerDim + x
+            #         mosaic.column = j * self.nbTilesPerDim + y
+            #         mosaic.image = path
+            #         mosaic.save()
 
             # build mosaic with merging tiles
             self.mosaic.paste(tile, ((i%self.nbTilesPerDim)*self.imageDim, (j%self.nbTilesPerDim)*self.imageDim,((i%self.nbTilesPerDim)+1)*self.imageDim, ((j%self.nbTilesPerDim)+1)*self.imageDim))
